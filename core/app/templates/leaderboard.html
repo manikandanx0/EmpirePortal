@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Leaderboard{% endblock %}
+
+{% block content %}
+
+<h2 class="text-4xl font-extrabold text-center mb-10 tracking-wide">
+  Leaderboard
+</h2>
+
+<div class="max-w-4xl mx-auto bg-[var(--panel-bg)] p-8 border-2 border-[var(--ink-black)]
+            shadow-[4px_4px_0_rgba(28,28,28,0.6)]">
+
+  <table class="w-full border-collapse">
+
+    <thead>
+      <tr class="bg-[var(--board-bg)] border-b-2 border-[var(--ink-black)]">
+        <th class="px-4 py-3 text-left text-lg font-bold border-r-2 border-[var(--ink-black)]">
+          Rank
+        </th>
+        <th class="px-4 py-3 text-left text-lg font-bold border-r-2 border-[var(--ink-black)]">
+          Team
+        </th>
+        <th class="px-4 py-3 text-left text-lg font-bold">
+          Total Score
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for score in leaderboard %}
+        <tr class="border-b border-[var(--ink-black)] even:bg-[var(--board-bg)]">
+
+          <!-- Rank -->
+          <td class="px-4 py-3 font-bold border-r border-[var(--ink-black)]">
+            {{ forloop.counter }}
+          </td>
+
+          <!-- Team -->
+          <td class="px-4 py-3 border-r border-[var(--ink-black)]">
+            {{ score.team.name }}
+          </td>
+
+          <!-- Score -->
+          <td class="px-4 py-3 font-semibold">
+            {{ score.total }}
+          </td>
+
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="3"
+              class="px-4 py-6 text-center italic border-2 border-[var(--ink-black)]">
+            No scores yet
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+
+  </table>
+
+</div>
+
+{% endblock %}

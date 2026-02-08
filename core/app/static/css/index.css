@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap');
+:root {
+  /* Board / Paper */
+  --board-bg: rgba(247, 243, 232, 1);
+  --panel-bg: rgba(255, 255, 255, 1);
+  --ink-black: rgba(28, 28, 28, 1);
+  --ink-soft: rgba(28, 28, 28, 0.6);
+
+  /* Red */
+  --red-500: rgba(230, 76, 76, 1);
+  --red-600: rgba(204, 60, 60, 1);
+  --red-700: rgba(178, 44, 44, 1);
+  --red-800: rgba(140, 30, 30, 1);
+  --red-900: rgba(112, 22, 22, 1);
+
+  /* Green */
+  --green-500: rgba(92, 170, 110, 1);
+  --green-600: rgba(72, 145, 90, 1);
+  --green-700: rgba(54, 118, 72, 1);
+  --green-800: rgba(40, 92, 56, 1);
+  --green-900: rgba(30, 72, 44, 1);
+
+  /* Yellow */
+  --yellow-500: rgba(242, 211, 112, 1);
+  --yellow-600: rgba(214, 184, 92, 1);
+  --yellow-700: rgba(186, 158, 74, 1);
+  --yellow-800: rgba(150, 126, 58, 1);
+  --yellow-900: rgba(120, 100, 46, 1);
+
+  /* Blue */
+  --blue-500: rgba(90, 150, 210, 1);
+  --blue-600: rgba(70, 126, 184, 1);
+  --blue-700: rgba(54, 104, 158, 1);
+  --blue-800: rgba(40, 82, 126, 1);
+  --blue-900: rgba(30, 66, 102, 1);
+
+  /* Cyan */
+  --cyan-500: rgba(110, 190, 200, 1);
+  --cyan-600: rgba(88, 164, 172, 1);
+  --cyan-700: rgba(68, 138, 144, 1);
+  --cyan-800: rgba(52, 112, 116, 1);
+  --cyan-900: rgba(40, 90, 94, 1);
+
+  /* Pink */
+  --pink-500: rgba(214, 98, 150, 1);
+  --pink-600: rgba(188, 78, 128, 1);
+  --pink-700: rgba(162, 60, 108, 1);
+  --pink-800: rgba(132, 44, 88, 1);
+  --pink-900: rgba(104, 34, 70, 1);
+
+  /* Hard Shadows (ink offset) */
+  --shadow-red: 3px 3px 0 0 rgba(140, 30, 30, 1);
+  --shadow-green: 3px 3px 0 0 rgba(40, 92, 56, 1);
+  --shadow-yellow: 3px 3px 0 0 rgba(150, 126, 58, 1);
+  --shadow-blue: 3px 3px 0 0 rgba(40, 82, 126, 1);
+  --shadow-cyan: 3px 3px 0 0 rgba(52, 112, 116, 1);
+  --shadow-pink: 3px 3px 0 0 rgba(132, 44, 88, 1);
+}
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+body{
+    font-family: "Kode Mono", monospace;
+    font-optical-sizing: auto;
+
+}

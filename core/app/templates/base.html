@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+      {% block title %}
+        👑 Tech Empire Quest
+      {% endblock %}
+    </title>
+    {% load static %}
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="/static/css/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    {% block extra_head %}
+    {% endblock %}
+  </head>
+  <body class="bg-[var(--board-bg)] pb-[12vh] pt-[12vh]">
+
+    <div   class="
+    fixed
+    top-4
+    right-4
+    z-50
+
+    bg-[var(--panel-bg)]
+    text-[var(--red-500)]
+    font-mono
+    text-3xl
+    tracking-widest
+
+    px-5
+    py-3
+    
+    border-3
+    border-[var(--red-700)]
+
+    box-shadow
+    select-none" 
+  style="box-shadow: var(--shadow-red)"
+  id="timer">Loading...</div>
+
+    
+
+    {% block content %}
+
+    {% endblock %}
+
+    {% block scripts %}{% endblock %}
+    <script>
+(() => {
+  const globalStartTime = new Date('2026-02-07T18:00:00')
+  const globalEndTime = new Date('2026-02-07T21:00:00')
+
+  const timerEl = document.getElementById('timer')
+  if (!timerEl) return
+
+  function updateGlobalTimer() {
+    const now = new Date()
+
+    if (now < globalStartTime) {
+      timerEl.textContent = 'Not started yet'
+      return
+    }
+
+    const remaining = globalEndTime - now
+
+    if (remaining <= 0) {
+      timerEl.textContent = '00:00:00'
+      return
+    }
+
+    const h = Math.floor(remaining / 3600000)
+    const m = Math.floor((remaining % 3600000) / 60000)
+    const s = Math.floor((remaining % 60000) / 1000)
+
+    timerEl.textContent =
+      String(h).padStart(2, '0') + ':' +
+      String(m).padStart(2, '0') + ':' +
+      String(s).padStart(2, '0')
+  }
+
+  updateGlobalTimer()
+  setInterval(updateGlobalTimer, 1000)
+})()
+</script>
+
+  </body>
+</html>
