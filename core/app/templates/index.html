@@ -34,58 +34,20 @@
         </div>
       </div>
 
-      <div class="flex items-center gap-3">
-        <div
-          class="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--neon-purple)]/20 to-[var(--neon-pink)]/20 border border-[var(--neon-purple)]/30 flex items-center justify-center">
-          <span class="text-2xl">🎯</span>
-        </div>
-        <div>
-          <p class="mono text-xs text-[var(--text-muted)] tracking-widest">SQUAD</p>
-          <p class="mono text-lg text-[var(--neon-purple)] tracking-wider font-semibold">
-            {{ team.name }}
-          </p>
-        </div>
+      <div class="flex gap-4 justify-start md:justify-end">
+        <a href="{% url 'zones' %}" class="btn mono">
+          Enter Zones
+        </a>
+        <a href="{% url 'logout' %}" class="btn mono">
+          Log out
+        </a>
       </div>
     </div>
 
-    <!-- Action Buttons -->
-    <div class="flex flex-wrap gap-3 justify-start md:justify-end">
-      <a href="{% url 'zones' %}" class="btn mono group">
-        <svg class="w-5 h-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor"
-          viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-        </svg>
-        <span>Enter Zones</span>
-      </a>
-      <a href="{% url 'leaderboard' %}" class="btn btn-secondary mono group">
-        <svg class="w-5 h-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor"
-          viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-        </svg>
-        <span>Rankings</span>
-      </a>
-      <a href="{% url 'logout' %}" class="btn btn-danger mono group">
-        <svg class="w-5 h-5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor"
-          viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-        </svg>
-        <span>Disconnect</span>
-      </a>
-    </div>
-  </div>
-
-  <!-- Squad Members -->
-  <div class="panel card hud animate-fade-in-up stagger-2" style="opacity: 0;">
-    <div class="flex items-center justify-between mb-6">
-      <h2 class="mono text-lg text-[var(--neon-purple)] tracking-widest flex items-center gap-2">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-        </svg>
-        // SQUAD ROSTER
+    <!-- Squad Members -->
+    <div class="panel card hud">
+      <h2 class="mono text-lg mb-4 text-[var(--neon-purple)] tracking-widest">
+        // Team Members
       </h2>
       <span
         class="mono text-xs px-3 py-1 rounded-full bg-[var(--neon-purple)]/10 border border-[var(--neon-purple)]/30 text-[var(--neon-purple)]">

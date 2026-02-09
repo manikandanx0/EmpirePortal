@@ -40,17 +40,11 @@ def sync_username_on_rename(sender, instance, **kwargs):
         instance.user.username = new_username
         instance.user.save(update_fields=["username"])
 
+from django.contrib.sessions.models import Session
+from django.utils import timezone
 
-@receiver(user_logged_in)
-def limit_user_sessions(sender, request, user, **kwargs):
-    sessions = Session.objects.filter(expire_date__gte=timezone.now())
-
-    for session in sessions:
-        data = session.get_decoded()
-        if data.get("_auth_user_id") == str(user.id):
-            if session.session_key != request.session.session_key:
-                session.delete()
-
+def cleanup_sessions():
+    Session.objects.filter(expire_date__lt=timezone.now()).delete()
 from .models import ZoneAttempt
 
 @receiver(user_logged_out)

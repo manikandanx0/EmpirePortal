@@ -24,11 +24,12 @@ class TeamAdmin(admin.ModelAdmin):
 # PLAYER
 # -------------------------
 
+
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "role", "team")
     list_filter = ("role", "team")
-    search_fields = ("name",)
+    search_fields = ("name", "role", "team__name")  # 🔍 allow searching by name & role
 
 
 # -------------------------
@@ -64,10 +65,15 @@ class ZoneAdmin(admin.ModelAdmin):
 
 @admin.register(ZoneAttemptAccess)
 class ZoneAttemptAccessAdmin(admin.ModelAdmin):
+
     list_display = ("team", "zone", "player", "attempt_code", "is_used", "created_at")
     list_filter = ("zone", "team", "is_used")
+    autocomplete_fields = ["player", "team"]
     search_fields = ("attempt_code", "player__name", "team__name")
     ordering = ("team__name", "zone__title", "player__role")
+
+
+
 
 
 # -------------------------

@@ -62,7 +62,7 @@ class Command(BaseCommand):
 
                 # --- Create team + team user only once ---
                 if team_name not in teams_created:
-                    username = f"{slugify_name(team_name)}_{random.randint(1000,9999)}"
+                    username = f"{slugify_name(team_name)}"
                     password = random_password()
 
                     user = User.objects.create_user(

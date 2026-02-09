@@ -5,24 +5,26 @@
 {% endblock %}
 
 {% block content %}
-<section class="max-w-5xl mx-auto space-y-6 md:space-y-8 relative">
+<section class="max-w-5xl mx-auto min-h-[70vh] space-y-8 relative">
 
   <!-- ZONE TIMER (TOP LEFT HUD) -->
-  <div id="zone-timer" role="status" aria-live="polite" aria-atomic="true" class="
-      fixed top-20 left-4 z-40
+  <div
+    id="zone-timer"
+    role="status"
+    aria-live="polite"
+    aria-atomic="true"
+    class="
+      fixed top-4  z-40
       panel
       mono
       px-4 py-2.5
       text-sm
       tracking-widest
       select-none
-      flex items-center gap-2
-    ">
-    <svg class="w-4 h-4 text-[var(--neon-cyan)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-    <span id="zone-timer-text">0:00</span>
+      w-[max-content]
+    "
+  >
+    Time spent: 0:00
   </div>
 
   <!-- ZONE HEADER -->
@@ -69,9 +71,11 @@
   </div>
 
   <!-- SUBMIT PANEL -->
-  <form method="post" action="{% url 'submit_zone' zone.id %}"
-    class="panel card hud flex flex-wrap items-center justify-between gap-4 animate-fade-in-up stagger-2"
-    style="opacity: 0;">
+  <form
+    method="post"
+    action="{% url 'submit_zone' zone.id %}"
+    class="flex items-center justify-end"
+  >
     {% csrf_token %}
 
     <div class="flex items-center gap-3">

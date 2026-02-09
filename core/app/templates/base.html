@@ -29,20 +29,13 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
     <!-- Global Theme CSS -->
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 
     {% block extra_head %}{% endblock %}
   </head>
 
   <body class="min-h-[max-content]">
-
-    <!-- Scanlines Overlay -->
-    <div class="scanlines" aria-hidden="true"></div>
-
-    <!-- Ambient Glow Orbs -->
-    <div class="glow-orb glow-orb-cyan" aria-hidden="true"></div>
-    <div class="glow-orb glow-orb-purple" aria-hidden="true"></div>
-
+    
     <!-- Skip link -->
     <a
       href="#main"
@@ -55,34 +48,13 @@
     <div class="min-h-[max-content] flex flex-col">
 
 <!-- Header / HUD Bar -->
-<header class="px-4 md:px-6 pt-4 md:pt-6 animate-fade-in-up">
-  <div class="panel px-4 md:px-6 py-3 md:py-4 flex items-center justify-between gap-4 md:gap-6">
-
-    <!-- Left: Title with Logo -->
-    <a href="{% url 'index' %}" class="flex items-center gap-3 group">
-      <span class="text-2xl" aria-hidden="true">👑</span>
-      <h1 class="
-        text-sm md:text-lg
-        font-semibold
-        tracking-[0.15em] md:tracking-[0.2em]
-        text-[var(--text-secondary)]
-        whitespace-nowrap
-        group-hover:text-[var(--neon-cyan)]
-        transition-colors
-      ">
-        TECH EMPIRE <span class="hidden sm:inline">QUEST</span>
-      </h1>
-    </a>
-
-    <!-- Center: Navigation (Desktop) -->
-    <nav class="hidden md:flex items-center gap-6" aria-label="Main navigation">
-      <a href="{% url 'zones' %}" class="mono text-sm tracking-wider text-[var(--text-muted)] hover:text-[var(--neon-cyan)] transition-colors">
-        ZONES
-      </a>
-      <a href="{% url 'leaderboard' %}" class="mono text-sm tracking-wider text-[var(--text-muted)] hover:text-[var(--neon-purple)] transition-colors">
-        RANKINGS
-      </a>
-    </nav>
+<header class="px-6 pt-6">
+  <div class="panel px-6 py-4 flex items-center justify-between gap-6">
+<h1 class="
+  hero-title
+">
+  Tech Empire Quest
+</h1>
 
     <!-- Right: Timer -->
     <div

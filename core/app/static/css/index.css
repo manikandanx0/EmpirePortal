@@ -1,8 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&family=Space+Grotesk:wght@300..700&display=swap');
-
-/* ===============================
-   THEME TOKENS
-================================ */
 :root {
   --bg: #070b12;
   --bg-dark: #04070d;
@@ -31,7 +26,6 @@
 
 /* ===============================
    BASE RESET
-================================ */
 *,
 *::before,
 *::after {
@@ -55,7 +49,6 @@ body {
 
 /* ===============================
    ANIMATED BACKGROUND
-================================ */
 body::before {
   content: "";
   position: fixed;
@@ -118,7 +111,6 @@ body::after {
 
 /* ===============================
    TYPOGRAPHY
-================================ */
 h1,
 h2,
 h3 {
@@ -202,7 +194,6 @@ h3 {
 
 /* ===============================
    GLASS PANELS
-================================ */
 .panel {
   background: var(--panel-bg);
   backdrop-filter: blur(16px) saturate(150%);
@@ -276,7 +267,6 @@ h3 {
 
 /* ===============================
    TIMER STYLING
-================================ */
 #timer {
   color: var(--neon-cyan);
   text-shadow:
@@ -353,7 +343,6 @@ h3 {
 
 /* ===============================
    BUTTONS
-================================ */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -480,7 +469,6 @@ h3 {
 
 /* ===============================
    CARDS / ZONES
-================================ */
 .card {
   padding: 1.75rem;
   border-radius: 18px;
@@ -555,7 +543,6 @@ h3 {
 
 /* ===============================
    HUD DECORATIONS
-================================ */
 .hud {
   position: relative;
 }
@@ -611,7 +598,6 @@ h3 {
 
 /* ===============================
    FORM INPUTS
-================================ */
 input[type="text"],
 input[type="password"],
 input[type="email"],
@@ -661,7 +647,6 @@ textarea:focus {
 
 /* ===============================
    LABELS
-================================ */
 label {
   display: block;
   font-size: 0.75rem;
@@ -673,7 +658,6 @@ label {
 
 /* ===============================
    LINKS
-================================ */
 a {
   color: var(--neon-cyan);
   text-decoration: none;
@@ -707,7 +691,6 @@ a.link-underline:hover::after {
 
 /* ===============================
    LEADERBOARD STYLES
-================================ */
 .leaderboard-table {
   width: 100%;
   border-collapse: separate;
@@ -796,7 +779,6 @@ a.link-underline:hover::after {
 
 /* ===============================
    STATUS INDICATORS
-================================ */
 .status-indicator {
   display: inline-flex;
   align-items: center;
@@ -852,7 +834,6 @@ a.link-underline:hover::after {
 
 /* ===============================
    LOADING ANIMATIONS
-================================ */
 .loading-dots {
   display: inline-flex;
   gap: 4px;
@@ -912,7 +893,6 @@ a.link-underline:hover::after {
 
 /* ===============================
    ALERTS & MESSAGES
-================================ */
 .alert {
   padding: 1rem 1.25rem;
   border-radius: 12px;
@@ -943,7 +923,6 @@ a.link-underline:hover::after {
 
 /* ===============================
    DECORATIVE ELEMENTS
-================================ */
 /* Data Stream Lines */
 .data-stream {
   position: fixed;
@@ -1025,7 +1004,6 @@ a.link-underline:hover::after {
 
 /* ===============================
    UTILITY CLASSES
-================================ */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -1256,7 +1234,6 @@ a.link-underline:hover::after {
 
 /* ===============================
    RESPONSIVE GRID
-================================ */
 .grid {
   display: grid;
 }
@@ -1275,7 +1252,6 @@ a.link-underline:hover::after {
 
 /* ===============================
    RESPONSIVE ADJUSTMENTS
-================================ */
 @media (max-width: 768px) {
   body::after {
     background-size: 30px 30px;
@@ -1298,7 +1274,6 @@ a.link-underline:hover::after {
 
 /* ===============================
    PROSE STYLES (for zone content)
-================================ */
 .prose {
   line-height: 1.7;
   color: var(--text-secondary);
@@ -1369,7 +1344,6 @@ a.link-underline:hover::after {
 
 /* ===============================
    ENTRANCE ANIMATIONS
-================================ */
 @keyframes fadeInUp {
   from {
     opacity: 0;
