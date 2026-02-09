@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-  {{ zone.title }} – Zone | 👑 Tech Empire Quest
+{{ zone.title }} – Zone | 👑 Tech Empire Quest
 {% endblock %}
 
 {% block content %}
@@ -17,7 +17,7 @@
       fixed top-4  z-40
       panel
       mono
-      px-5 py-2
+      px-4 py-2.5
       text-sm
       tracking-widest
       select-none
@@ -28,24 +28,46 @@
   </div>
 
   <!-- ZONE HEADER -->
-  <div class="panel card hud space-y-2">
-    <h2 id="zone-title" class="text-2xl tracking-widest text-[var(--neon-cyan)]">
-      {{ zone.title }}
-    </h2>
+  <div class="panel card hud animate-fade-in-up">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-4">
+        <div
+          class="w-14 h-14 rounded-xl bg-gradient-to-br from-[var(--neon-cyan)]/20 to-[var(--neon-purple)]/20 border border-[var(--neon-cyan)]/30 flex items-center justify-center">
+          <span class="mono text-xl font-bold text-[var(--neon-cyan)]">Z{{ zone.id }}</span>
+        </div>
+        <div>
+          <h2 id="zone-title" class="text-xl md:text-2xl tracking-widest text-[var(--neon-cyan)] font-semibold">
+            {{ zone.title }}
+          </h2>
+          <p class="mono text-sm text-[var(--text-muted)] tracking-wider mt-1">
+            <span class="text-[var(--text-main)]">{{ player.name }}</span>
+            <span class="opacity-60 ml-2">// {{ role }}</span>
+          </p>
+        </div>
+      </div>
 
-    <p class="mono text-sm text-[var(--text-muted)] tracking-wider">
-      <span class="text-[var(--text-main)]">{{ player.name }}</span>
-      <span class="opacity-60"> ({{ role }})</span>
-    </p>
+      <div class="status-indicator status-active">
+        IN PROGRESS
+      </div>
+    </div>
   </div>
 
   <!-- ZONE CONTENT CARD -->
-  <div
-    role="region"
-    aria-labelledby="zone-title"
-    class="panel card hud prose prose-invert max-w-none"
-  >
-    {{ content|safe }}
+  <div role="region" aria-labelledby="zone-title"
+    class="panel card hud prose prose-invert max-w-none animate-fade-in-up stagger-1" style="opacity: 0;">
+    <!-- Content Header -->
+    <div class="flex items-center gap-2 mb-6 pb-4 border-b border-white/10">
+      <svg class="w-5 h-5 text-[var(--neon-purple)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+      <span class="mono text-sm tracking-widest text-[var(--neon-purple)]">MISSION BRIEFING</span>
+    </div>
+
+    <!-- Zone Content -->
+    <div class="zone-content">
+      {{ content|safe }}
+    </div>
   </div>
 
   <!-- SUBMIT PANEL -->
@@ -55,40 +77,78 @@
     class="flex items-center justify-end"
   >
     {% csrf_token %}
-    <button type="submit" class="btn mono">
+
+    <div class="flex items-center gap-3">
+      <div
+        class="w-10 h-10 rounded-lg bg-[var(--success)]/10 border border-[var(--success)]/30 flex items-center justify-center">
+        <svg class="w-5 h-5 text-[var(--success)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <div>
+        <p class="mono text-xs text-[var(--text-muted)] tracking-widest">READY TO SUBMIT?</p>
+        <p class="mono text-sm text-[var(--text-main)]">Complete your mission</p>
+      </div>
+    </div>
+
+    <button type="submit" class="btn mono group">
+      <svg class="w-5 h-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor"
+        viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
       Submit Zone
     </button>
   </form>
 
+  <!-- Back to Zones Link -->
+  <div class="text-center pt-2 animate-fade-in" style="animation-delay: 0.5s;">
+    <a href="{% url 'zones' %}"
+      class="mono text-sm tracking-widest text-[var(--text-muted)] hover:text-[var(--neon-cyan)] inline-flex items-center gap-2 group transition-colors">
+      <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor"
+        viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Back to Zones
+    </a>
+  </div>
+
 </section>
 
 <script>
-(() => {
-  // ZONE TIMER (isolated scope)
-  const zoneTimerEl = document.getElementById("zone-timer");
-  if (!zoneTimerEl) return;
+  (() => {
+    // ZONE TIMER (isolated scope)
+    const zoneTimerEl = document.getElementById("zone-timer");
+    const zoneTimerText = document.getElementById("zone-timer-text");
+    if (!zoneTimerEl || !zoneTimerText) return;
 
-  const zoneStartTime = new Date("{{ attempt.entry_time|date:'c' }}").getTime();
+    const zoneStartTime = new Date("{{ attempt.entry_time|date:'c' }}").getTime();
 
-  function updateZoneTimer() {
-    const now = Date.now();
-    const diff = Math.floor((now - zoneStartTime) / 1000);
+    function updateZoneTimer() {
+      const now = Date.now();
+      const diff = Math.floor((now - zoneStartTime) / 1000);
 
-    const mins = Math.floor(diff / 60);
-    const secs = diff % 60;
+      const mins = Math.floor(diff / 60);
+      const secs = diff % 60;
 
-    zoneTimerEl.textContent =
-      "Time spent: " + mins + ":" + String(secs).padStart(2, "0");
+      zoneTimerText.textContent = mins + ":" + String(secs).padStart(2, "0");
 
-    // Optional urgency styling
-    if (diff > 300) {
-      zoneTimerEl.classList.add("border-[var(--neon-pink)]");
+      // Urgency styling when over 5 minutes
+      if (diff > 300) {
+        zoneTimerEl.classList.add("urgent");
+        zoneTimerEl.style.borderColor = "var(--neon-pink)";
+        zoneTimerText.style.color = "var(--neon-pink)";
+      }
+
+      // Critical styling when over 10 minutes
+      if (diff > 600) {
+        zoneTimerEl.style.animation = "urgentPulse 1s ease-in-out infinite";
+      }
     }
-  }
 
-  updateZoneTimer();
-  setInterval(updateZoneTimer, 1000);
-})();
+    updateZoneTimer();
+    setInterval(updateZoneTimer, 1000);
+  })();
 </script>
 
 {% endblock %}

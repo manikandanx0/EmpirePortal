@@ -2,12 +2,16 @@
 {% block title %}Zones | 👑 Tech Empire Quest{% endblock %}
 
 {% block content %}
-<section class="max-w-6xl mx-auto space-y-10">
+<section class="max-w-6xl mx-auto space-y-8 md:space-y-10">
 
   <!-- Header -->
-  <div class="text-center">
-    <h2 class="mono text-2xl tracking-widest text-[var(--neon-purple)]">
-      // Zones
+  <div class="text-center animate-fade-in-up">
+    <div
+      class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--neon-purple)]/20 to-[var(--neon-cyan)]/20 border border-[var(--neon-purple)]/30 mb-4">
+      <span class="text-3xl">🗺️</span>
+    </div>
+    <h2 class="mono text-xl md:text-2xl tracking-widest gradient-text font-bold">
+      // OPERATION ZONES
     </h2>
     <p class="mono text-sm text-[var(--text-muted)] tracking-wider mt-2">
       Select an operational zone to deploy your squad
@@ -15,106 +19,141 @@
   </div>
 
   <!-- Zones Grid -->
-  <ul class="grid md:grid-cols-2 gap-8">
+  <ul class="grid md:grid-cols-2 gap-6 md:gap-8">
 
     {% for zone in zones %}
-      <li
-        role="article"
-        aria-labelledby="zone-title-{{ zone.id }}"
-        class="panel card hud flex flex-col justify-between"
-      >
+    <li role="article" aria-labelledby="zone-title-{{ zone.id }}"
+      class="panel card hud flex flex-col justify-between animate-fade-in-up">
 
-        <!-- Zone Info -->
-        <div class="space-y-3">
-          <h3
-            id="zone-title-{{ zone.id }}"
-            class="text-xl tracking-widest text-[var(--neon-cyan)]"
-          >
-            {{ zone.title }}
-          </h3>
-
-          <div class="text-sm text-[var(--text-muted)] leading-relaxed">
-            {{ zone.description|safe }}
-          </div>
-        </div>
-
-        <!-- Zone Action -->
-        <div class="mt-6 flex items-center justify-between gap-4">
-
-          <div class="mono text-xs tracking-widest text-[var(--text-muted)]">
-            {% if zone.score %}
-              SCORE: <span class="text-[var(--text-main)]">{{ zone.score }}</span>
-            {% else %}
-              SCORE: <span class="text-[var(--text-muted)]">—</span>
-            {% endif %}
-          </div>
-
+      <!-- Zone Header -->
+      <div class="space-y-4">
+        <div class="flex items-start justify-between gap-4">
           <div class="flex items-center gap-3">
+            <div
+              class="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--neon-cyan)]/20 to-[var(--neon-purple)]/20 border border-[var(--neon-cyan)]/30 flex items-center justify-center">
+              <span class="mono text-lg font-bold text-[var(--neon-cyan)]">Z{{ zone.id }}</span>
+            </div>
+            <h3 id="zone-title-{{ zone.id }}"
+              class="text-lg md:text-xl tracking-widest text-[var(--neon-cyan)] font-semibold">
+              {{ zone.title }}
+            </h3>
+          </div>
 
-            {% if zone.has_completed %}
-              {% if zone.can_enter %}
-                <!-- COMPLETED BUT RE-ENTERABLE -->
-                <a
-                  href="{% url 'enter_zone' %}"
-                  aria-label="Re-enter {{ zone.title }}"
-                  class="btn mono"
-                >
-                  Re-Enter
-                </a>
-              {% else %}
-                <!-- COMPLETED & LOCKED -->
-                <span
-                  class="mono text-xs px-3 py-1 rounded-full border border-white/20 text-[var(--text-muted)]"
-                >
-                  Completed
-                </span>
-              {% endif %}
+          <!-- Status Badge -->
+          {% if zone.has_active %}
+          <span class="status-indicator status-active">
+            ACTIVE
+          </span>
+          {% elif zone.has_completed %}
+          <span class="status-indicator status-completed">
+            ✓ DONE
+          </span>
+          {% elif not zone.can_enter %}
+          <span class="status-indicator status-locked">
+            🔒 LOCKED
+          </span>
+          {% endif %}
+        </div>
 
-            {% elif zone.has_active %}
-              <!-- ACTIVE -->
-              <a
-                href="{% url 'enter_zone' %}"
-                aria-label="Continue {{ zone.title }}"
-                class="btn mono"
-              >
-                Continue
-              </a>
+        <!-- Description -->
+        <div class="text-sm text-[var(--text-muted)] leading-relaxed pl-15">
+          {{ zone.description|safe }}
+        </div>
+      </div>
 
+      <!-- Zone Footer -->
+      <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between gap-4">
+
+        <!-- Score Display -->
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-black/40 border border-white/10 flex items-center justify-center">
+            <span class="text-lg">⭐</span>
+          </div>
+          <div>
+            <p class="mono text-xs text-[var(--text-muted)] tracking-widest">SCORE</p>
+            {% if zone.score %}
+            <p class="mono text-lg font-bold text-[var(--neon-cyan)]">{{ zone.score }}</p>
             {% else %}
-              {% if zone.can_enter %}
-                <!-- NEVER ATTEMPTED BUT ACCESS EXISTS -->
-                <a
-                  href="{% url 'enter_zone' %}"
-                  aria-label="Enter {{ zone.title }}"
-                  class="btn mono"
-                >
-                  Enter Zone
-                </a>
-              {% else %}
-                <!-- LOCKED -->
-                <span
-                  class="mono text-xs px-3 py-1 rounded-full border border-[var(--neon-pink)] text-[var(--neon-pink)]"
-                >
-                  🔒 Locked
-                </span>
-              {% endif %}
+            <p class="mono text-lg text-[var(--text-muted)]">—</p>
             {% endif %}
-
           </div>
         </div>
 
-      </li>
+        <!-- Action Buttons -->
+        <div class="flex items-center gap-3">
+
+          {% if zone.has_completed %}
+          {% if zone.can_enter %}
+          <!-- COMPLETED BUT RE-ENTERABLE -->
+          <a href="{% url 'enter_zone' %}" aria-label="Re-enter {{ zone.title }}" class="btn mono group">
+            <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            Re-Enter
+          </a>
+          {% else %}
+          <!-- COMPLETED & LOCKED -->
+          <span
+            class="mono text-xs px-4 py-2 rounded-lg border border-[var(--success)]/30 text-[var(--success)] bg-[var(--success)]/10">
+            ✓ Completed
+          </span>
+          {% endif %}
+
+          {% elif zone.has_active %}
+          <!-- ACTIVE -->
+          <a href="{% url 'enter_zone' %}" aria-label="Continue {{ zone.title }}" class="btn mono group">
+            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Continue
+          </a>
+
+          {% else %}
+          {% if zone.can_enter %}
+          <!-- NEVER ATTEMPTED BUT ACCESS EXISTS -->
+          <a href="{% url 'enter_zone' %}" aria-label="Enter {{ zone.title }}" class="btn mono group">
+            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+            Enter Zone
+          </a>
+          {% else %}
+          <!-- LOCKED -->
+          <span
+            class="mono text-xs px-4 py-2 rounded-lg border border-[var(--neon-pink)]/40 text-[var(--neon-pink)] bg-[var(--neon-pink)]/10 flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+            Locked
+          </span>
+          {% endif %}
+          {% endif %}
+
+        </div>
+      </div>
+
+    </li>
     {% endfor %}
 
   </ul>
 
   <!-- Footer Nav -->
-  <div class="text-center pt-6">
-    <a
-      href="{% url 'index' %}"
-      class="mono text-sm tracking-widest text-[var(--neon-cyan)] hover:underline"
-    >
-      ← Return to Base
+  <div class="text-center pt-4 animate-fade-in" style="animation-delay: 0.5s;">
+    <a href="{% url 'index' %}"
+      class="mono text-sm tracking-widest text-[var(--neon-cyan)] hover:underline inline-flex items-center gap-2 group">
+      <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor"
+        viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Return to Base
     </a>
   </div>
 
