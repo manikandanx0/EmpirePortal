@@ -83,7 +83,7 @@ def team_logout(request):
 
 @login_required(login_url="/login/")
 def index(request):
-    team = request.user.team
+    team = getattr(request.user, "team", None)
     players = team.players.all()
 
     return render(request, "index.html", {

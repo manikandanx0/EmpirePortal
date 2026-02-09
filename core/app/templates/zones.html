@@ -3,197 +3,102 @@
 
 {% block content %}
 
-<h2 class="text-4xl font-extrabold text-center mb-10 tracking-wide">
-  Zones
-</h2>
+<div>
+  <h2>
+    // Combat Zones
+  </h2>
 
-<ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+  <ul>
 
-  {% for zone in zones %}
-    <li
-      class="
-        bg-[var(--panel-bg)]
-        border-2
-        border-[var(--ink-black)]
-        p-6
-        min-h-[220px]
-        flex
-        flex-col
-        justify-between
-        shadow-[4px_4px_0_rgba(28,28,28,0.6)]
-      "
+    {% for zone in zones %}
+      <li role="article" aria-labelledby="zone-title-{{ zone.id }}">
     >
 
-      <!-- Zone info -->
-      <div>
-        <h3 class="text-2xl font-bold mb-3">
-          {{ zone.title }}
-        </h3>
+        <!-- Zone info -->
+        <div>
+          <h3 id="zone-title-{{ zone.id }}">
+            {{ zone.title }}
+          </h3>
 
-        <div class="text-base leading-relaxed">
-          {{ zone.description|safe }}
+          <div>
+            {{ zone.description|safe }}
+          </div>
         </div>
-      </div>
 
-      <!-- Zone action -->
-      <div class="mt-6 flex items-center justify-between gap-4">
-{% if zone.has_completed %}
-  {% if zone.can_enter %}
-    <!-- COMPLETED BUT RE-ENTERABLE -->
-    <div class="flex items-center gap-4">
-      <a
-        href="{% url 'enter_zone' %}"
-        class="
-          inline-block
-          px-5
-          py-3
-          font-bold
-          border-2
-          border-[var(--ink-black)]
-          bg-[var(--green-500)]
-          hover:-translate-x-1
-          hover:-translate-y-1
-          transition
-        "
-      >
-        Enter Zone
-      </a>
+        <!-- Zone action -->
+        <div>
+            {% if zone.has_completed %}
+            {% if zone.can_enter %}
+              <!-- COMPLETED BUT RE-ENTERABLE -->
+              <a href="{% url 'enter_zone' %}" aria-label="Re-enter {{ zone.title }}">
+                Re-Enter
+              </a>
 
-      <div class="text-right">
-        <p class="text-xs uppercase tracking-wide opacity-70">
-          Previous Score
-        </p>
-        <p class="text-2xl font-extrabold">
-          {{ zone.score }}
-        </p>
-      </div>
-    </div>
-  {% else %}
-    <!-- COMPLETED & LOCKED -->
-    <div class="flex items-center gap-4">
-      <span
-        class="
-          inline-block
-          px-4
-          py-2
-          text-sm
-          font-semibold
-          border-2
-          border-[var(--ink-black)]
-          bg-[var(--blue-500)]
-          opacity-70
-        "
-      >
-        Completed
-      </span>
+              <div>
+                <p>
+                  Prev Score
+                </p>
+                <p>
+                  {{ zone.score }}
+                </p>
+              </div>
+            {% else %}
+              <!-- COMPLETED & LOCKED -->
+              <span>
+                Completed
+              </span>
 
-      <div class="text-right">
-        <p class="text-xs uppercase tracking-wide opacity-70">
-          Score
-        </p>
-        <p class="text-2xl font-extrabold">
-          {{ zone.score }}
-        </p>
-      </div>
-    </div>
-  {% endif %}
+              <div>
+                <p>
+                  Score
+                </p>
+                <p>
+                  {{ zone.score }}
+                </p>
+              </div>
+            {% endif %}
 
-{% elif zone.has_active %}
-  <!-- ACTIVE -->
-  <div class="flex items-center gap-4">
-    <a
-      href="{% url 'enter_zone' %}"
-      class="
-        inline-block
-        px-5
-        py-3
-        font-bold
-        border-2
-        border-[var(--ink-black)]
-        bg-[var(--yellow-500)]
-        hover:-translate-x-1
-        hover:-translate-y-1
-        transition
-      "
-    >
-      Enter Zone
+          {% elif zone.has_active %}
+            <!-- ACTIVE -->
+              <a href="{% url 'enter_zone' %}" aria-label="Continue {{ zone.title }}">
+              Continue
+            </a>
+
+            <div>
+              <p>
+                Score
+              </p>
+              <p>
+                {{ zone.score }}
+              </p>
+            </div>
+
+          {% else %}
+              {% if zone.can_enter %}
+              <!-- NEVER ATTEMPTED BUT ACCESS EXISTS -->
+              <a href="{% url 'enter_zone' %}" aria-label="Enter {{ zone.title }}">
+                Enter Zone
+              </a>
+            {% else %}
+              <!-- LOCKED -->
+              <span>
+                🔒 Locked
+              </span>
+            {% endif %}
+          {% endif %}
+
+        </div>
+
+      </li>
+    {% endfor %}
+
+  </ul>
+
+  <div>
+    <a href="{% url 'index' %}">
+      ← Return to Base
     </a>
-
-    <div class="text-right">
-      <p class="text-xs uppercase tracking-wide opacity-70">
-        Score
-      </p>
-      <p class="text-2xl font-extrabold">
-        {{ zone.score }}
-      </p>
-    </div>
   </div>
-
-{% else %}
-  {% if zone.can_enter %}
-    <!-- NEVER ATTEMPTED BUT ACCESS EXISTS -->
-    <a
-      href="{% url 'enter_zone' %}"
-      class="
-        inline-block
-        px-5
-        py-3
-        font-bold
-        border-2
-        border-[var(--ink-black)]
-        bg-[var(--green-500)]
-        hover:-translate-x-1
-        hover:-translate-y-1
-        transition
-      "
-    >
-      Enter Zone
-    </a>
-  {% else %}
-    <!-- LOCKED -->
-    <span
-      class="
-        inline-block
-        px-5
-        py-3
-        font-bold
-        border-2
-        border-[var(--ink-black)]
-        bg-[var(--red-500)]
-        opacity-60
-        cursor-not-allowed
-      "
-    >
-      Locked
-    </span>
-  {% endif %}
-{% endif %}
-
-      </div>
-
-    </li>
-  {% endfor %}
-
-</ul>
-
-<div class="text-center mt-12">
-  <a
-    href="{% url 'index' %}"
-    class="
-      inline-block
-      px-6
-      py-3
-      font-bold
-      border-2
-      border-[var(--ink-black)]
-      bg-[var(--blue-500)]
-      hover:-translate-x-1
-      hover:-translate-y-1
-      transition
-    "
-  >
-    ← Back
-  </a>
 </div>
 
 {% endblock %}

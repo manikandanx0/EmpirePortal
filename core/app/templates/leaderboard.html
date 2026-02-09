@@ -4,61 +4,62 @@
 
 {% block content %}
 
-<h2 class="text-4xl font-extrabold text-center mb-10 tracking-wide">
-  Leaderboard
-</h2>
+<div>
+  <h2>Global Rankings</h2>
+  <div>
+    <table role="table" aria-describedby="leaderboard-caption">
+      <caption id="leaderboard-caption">Global rankings table showing team and score</caption>
 
-<div class="max-w-4xl mx-auto bg-[var(--panel-bg)] p-8 border-2 border-[var(--ink-black)]
-            shadow-[4px_4px_0_rgba(28,28,28,0.6)]">
-
-  <table class="w-full border-collapse">
-
-    <thead>
-      <tr class="bg-[var(--board-bg)] border-b-2 border-[var(--ink-black)]">
-        <th class="px-4 py-3 text-left text-lg font-bold border-r-2 border-[var(--ink-black)]">
-          Rank
-        </th>
-        <th class="px-4 py-3 text-left text-lg font-bold border-r-2 border-[var(--ink-black)]">
-          Team
-        </th>
-        <th class="px-4 py-3 text-left text-lg font-bold">
-          Total Score
-        </th>
-      </tr>
-    </thead>
-
-    <tbody>
-      {% for score in leaderboard %}
-        <tr class="border-b border-[var(--ink-black)] even:bg-[var(--board-bg)]">
-
-          <!-- Rank -->
-          <td class="px-4 py-3 font-bold border-r border-[var(--ink-black)]">
-            {{ forloop.counter }}
-          </td>
-
-          <!-- Team -->
-          <td class="px-4 py-3 border-r border-[var(--ink-black)]">
-            {{ score.team.name }}
-          </td>
-
-          <!-- Score -->
-          <td class="px-4 py-3 font-semibold">
-            {{ score.total }}
-          </td>
-
-        </tr>
-      {% empty %}
+      <thead>
         <tr>
-          <td colspan="3"
-              class="px-4 py-6 text-center italic border-2 border-[var(--ink-black)]">
-            No scores yet
-          </td>
+          <th scope="col">Rank</th>
+          <th scope="col">Squad</th>
+          <th scope="col">Score</th>
         </tr>
-      {% endfor %}
-    </tbody>
+      </thead>
 
-  </table>
+      <tbody>
+        {% for score in leaderboard %}
+          <tr>
 
+            <!-- Rank -->
+            <td role="cell">
+              {% if forloop.counter == 1 %}
+                <span>🥇 #{{ forloop.counter }}</span>
+              {% elif forloop.counter == 2 %}
+                <span>🥈 #{{ forloop.counter }}</span>
+              {% elif forloop.counter == 3 %}
+                <span>🥉 #{{ forloop.counter }}</span>
+              {% else %}
+                #{{ forloop.counter }}
+              {% endif %}
+            </td>
+
+            <!-- Team -->
+            <td role="cell">
+              {{ score.team.name }}
+            </td>
+
+            <!-- Score -->
+            <td role="cell">
+              <span aria-label="team score">
+                {{ score.total }}
+              </span>
+            </td>
+
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="3">
+              // No data available
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+
+    </table>
+
+  </div>
 </div>
 
 {% endblock %}

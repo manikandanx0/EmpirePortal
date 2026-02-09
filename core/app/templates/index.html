@@ -4,77 +4,74 @@
 {% block title %}Home | 👑 Tech Empire Quest{% endblock %}
 
 {% block content %}
-<h1 class="text-center text-4xl font-extrabold tracking-wide mb-8">
-  👑 Tech Empire Quest
-</h1>
+<div>
+  <h1>
+    👑 TECH EMPIRE QUEST
+  </h1>
 
-{% if user.is_authenticated %}
-  <div class="max-w-3xl mx-auto bg-[var(--panel-bg)] p-8 border-2 border-[var(--ink-black)] shadow-[4px_4px_0_rgba(28,28,28,0.6)]">
+  {% if user.is_authenticated %}
+    <div>
 
-    <p class="mb-1 text-lg">
-      <span class="font-semibold">Logged in as:</span> {{ user.username }}
-    </p>
+      <div>
+        <p>
+          <span>Operator:</span> 
+          <span>{{ user.username }}</span>
+        </p>
 
-    <p class="mb-6 text-lg">
-      <span class="font-semibold">Team:</span> {{ team.name }}
-    </p>
+        <p>
+          <span>Squad:</span> 
+          <span>{{ team.name }}</span>
+        </p>
+      </div>
 
-    <h2 class="text-2xl font-bold border-b-2 border-[var(--ink-black)] pb-2 mb-4">
-      Team Members
-    </h2>
+      <h2>
+        // Squad Members
+      </h2>
 
-    {% if players %}
-      <ul class="space-y-3">
-        {% for player in players %}
-          <li class="flex justify-between items-center bg-[var(--board-bg)] border-2 border-[var(--ink-black)] px-4 py-3">
+      {% if players %}
+        <ul role="list" aria-label="Squad members">
+          {% for player in players %}
+            <li role="listitem">
 
-            <span class="font-semibold">
-              {{ player.name }}
-            </span>
+              <span>
+                &gt; {{ player.name }}
+              </span>
 
-            <span class="text-sm px-3 py-1 border border-[var(--ink-black)] bg-[var(--yellow-500)]">
-              {{ player.get_role_display }}
-            </span>
+              <span aria-label="role">
+                {{ player.get_role_display }}
+              </span>
 
-          </li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p class="italic mt-4">No players added yet.</p>
-    {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>// No squad members detected...</p>
+      {% endif %}
 
-    <div class="mt-8 flex gap-4">
-      <a
-        href="{% url 'logout' %}"
-        class="px-5 py-2 border-2 border-[var(--ink-black)] bg-[var(--red-500)] font-semibold hover:translate-x-[-2px] hover:translate-y-[-2px] transition"
-      >
-        Logout
-      </a>
+      <div>
+        <a href="{% url 'logout' %}">
+          Disconnect
+        </a>
 
-      <a
-        href="{% url 'zones' %}"
-        class="px-5 py-2 border-2 border-[var(--ink-black)] bg-[var(--green-500)] font-semibold hover:translate-x-[-2px] hover:translate-y-[-2px] transition"
-      >
-        Go to Zones
-      </a>
+        <a href="{% url 'zones' %}">
+          Enter Zones
+        </a>
+      </div>
+
     </div>
+  {% else %}
+    <div>
 
-  </div>
-{% else %}
-  <div class="max-w-xl mx-auto text-center bg-[var(--panel-bg)] p-8 border-2 border-[var(--ink-black)] shadow-[4px_4px_0_rgba(28,28,28,0.6)]">
+      <p>
+        // Access Denied
+      </p>
 
-    <p class="mb-6 text-lg">
-      Not logged in
-    </p>
+      <a href="{% url 'team_login' %}">
+        Initialize Connection
+      </a>
 
-    <a
-      href="{% url 'team_login' %}"
-      class="inline-block px-6 py-3 border-2 border-[var(--ink-black)] bg-[var(--blue-500)] font-semibold hover:translate-x-[-2px] hover:translate-y-[-2px] transition"
-    >
-      Login
-    </a>
-
-  </div>
-{% endif %}
+    </div>
+  {% endif %}
+</div>
 
 {% endblock %}

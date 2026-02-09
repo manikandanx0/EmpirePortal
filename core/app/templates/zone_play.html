@@ -9,51 +9,28 @@
 <!-- ZONE TIMER (TOP LEFT) -->
 <div
   id="zone-timer"
-  class="
-    fixed
-    top-4
-    left-4
-    z-50
-    bg-[var(--panel-bg)]
-    border-2
-    border-[var(--ink-black)]
-    px-4
-    py-2
-    font-mono
-    text-lg
-    font-bold
-    shadow-[3px_3px_0_rgba(28,28,28,0.6)]
-    select-none
-  "
+  role="status"
+  aria-live="polite"
+  aria-atomic="true"
 >
   Time spent: 0:00
 </div>
 
 <!-- ZONE HEADER -->
-<h2 class="text-4xl font-extrabold text-center mb-2 tracking-wide">
+<h2 id="zone-title">
   {{ zone.title }}
 </h2>
 
-<p class="text-center text-lg mb-8">
-  <span class="font-semibold">{{ player.name }}</span> ({{ role }})
+<p>
+  <span>{{ player.name }}</span> ({{ role }})
 </p>
 
-<hr class="border-[var(--ink-black)] mb-10">
+<hr>
 
 <!-- ZONE CONTENT CARD -->
 <div
-  class="
-    zone-content
-    max-w-4xl
-    mx-auto
-    bg-[var(--panel-bg)]
-    p-8
-    border-2
-    border-[var(--ink-black)]
-    shadow-[4px_4px_0_rgba(28,28,28,0.6)]
-    text-lg
-    leading-relaxed
-  "
+  role="region"
+  aria-labelledby="zone-title"
 >
   {{ content|safe }}
 </div>
@@ -62,24 +39,10 @@
 <form
   method="post"
   action="{% url 'submit_zone' zone.id %}"
-  class="flex justify-center mt-12"
 >
   {% csrf_token %}
   <button
     type="submit"
-    class="
-      px-10
-      py-4
-      text-xl
-      font-extrabold
-      tracking-wide
-      border-2
-      border-[var(--ink-black)]
-      bg-[var(--green-500)]
-      hover:-translate-x-1
-      hover:-translate-y-1
-      transition
-    "
   >
     Submit Zone
   </button>

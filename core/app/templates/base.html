@@ -9,48 +9,31 @@
       {% endblock %}
     </title>
     {% load static %}
-    <!-- Global CSS -->
-    <link rel="stylesheet" href="/static/css/index.css">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     {% block extra_head %}
     {% endblock %}
   </head>
-  <body class="bg-[var(--board-bg)] pb-[12vh] pt-[12vh]">
+  <body>
 
-    <div   class="
-    fixed
-    top-4
-    right-4
-    z-50
+    <a href="#main" aria-label="Skip to main content">Skip to content</a>
 
-    bg-[var(--panel-bg)]
-    text-[var(--red-500)]
-    font-mono
-    text-3xl
-    tracking-widest
-
-    px-5
-    py-3
-    
-    border-3
-    border-[var(--red-700)]
-
-    box-shadow
-    select-none" 
-  style="box-shadow: var(--shadow-red)"
-  id="timer">Loading...</div>
+    <!-- Cyber Timer -->
+    <div id="timer" role="status" aria-live="polite" aria-atomic="true">
+      Loading...
+    </div>
 
     
 
-    {% block content %}
+    <main id="main" role="main">
+      {% block content %}
 
-    {% endblock %}
+      {% endblock %}
+    </main>
 
     {% block scripts %}{% endblock %}
     <script>
 (() => {
-  const globalStartTime = new Date('2026-02-07T18:00:00')
-  const globalEndTime = new Date('2026-02-07T21:00:00')
+  const globalStartTime = new Date('2026-02-09T10:00:00')
+  const globalEndTime = new Date('2026-02-14T12:00:00')
 
   const timerEl = document.getElementById('timer')
   if (!timerEl) return
