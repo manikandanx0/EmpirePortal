@@ -1,47 +1,81 @@
 {% extends "base.html" %}
 
-{% block title %}Leaderboard{% endblock %}
+{% block title %}Leaderboard | 👑 Tech Empire Quest{% endblock %}
 
 {% block content %}
+<section class="max-w-5xl mx-auto space-y-10">
 
-<div>
-  <h2>Global Rankings</h2>
-  <div>
-    <table role="table" aria-describedby="leaderboard-caption">
-      <caption id="leaderboard-caption">Global rankings table showing team and score</caption>
+  <!-- Header -->
+  <div class="text-center">
+    <h2 class="mono text-2xl tracking-widest text-[var(--neon-purple)]">
+      Global Rankings
+    </h2>
+    <p class="mono text-sm text-[var(--text-muted)] tracking-wider mt-2">
+      // Live competitive standings
+    </p>
+  </div>
+
+  <!-- Leaderboard Panel -->
+  <div class="panel card hud overflow-x-auto">
+
+    <table
+      role="table"
+      aria-describedby="leaderboard-caption"
+      class="w-full border-collapse"
+    >
+      <caption id="leaderboard-caption" class="sr-only">
+        Global rankings table showing team and score
+      </caption>
 
       <thead>
-        <tr>
-          <th scope="col">Rank</th>
-          <th scope="col">Squad</th>
-          <th scope="col">Score</th>
+        <tr class="border-b border-white/10">
+          <th
+            scope="col"
+            class="text-left py-3 px-4 mono text-xs tracking-widest text-[var(--text-muted)]"
+          >
+            Rank
+          </th>
+          <th
+            scope="col"
+            class="text-left py-3 px-4 mono text-xs tracking-widest text-[var(--text-muted)]"
+          >
+            Squad
+          </th>
+          <th
+            scope="col"
+            class="text-right py-3 px-4 mono text-xs tracking-widest text-[var(--text-muted)]"
+          >
+            Score
+          </th>
         </tr>
       </thead>
 
       <tbody>
         {% for score in leaderboard %}
-          <tr>
+          <tr
+            class="border-b border-white/5 hover:bg-white/5 transition"
+          >
 
             <!-- Rank -->
-            <td role="cell">
+            <td role="cell" class="py-3 px-4 mono tracking-wider">
               {% if forloop.counter == 1 %}
-                <span>🥇 #{{ forloop.counter }}</span>
+                <span class="text-[var(--neon-cyan)]">🥇 #{{ forloop.counter }}</span>
               {% elif forloop.counter == 2 %}
-                <span>🥈 #{{ forloop.counter }}</span>
+                <span class="text-[var(--neon-purple)]">🥈 #{{ forloop.counter }}</span>
               {% elif forloop.counter == 3 %}
-                <span>🥉 #{{ forloop.counter }}</span>
+                <span class="text-[var(--neon-pink)]">🥉 #{{ forloop.counter }}</span>
               {% else %}
-                #{{ forloop.counter }}
+                <span class="text-[var(--text-muted)]">#{{ forloop.counter }}</span>
               {% endif %}
             </td>
 
             <!-- Team -->
-            <td role="cell">
+            <td role="cell" class="py-3 px-4 tracking-wider">
               {{ score.team.name }}
             </td>
 
             <!-- Score -->
-            <td role="cell">
+            <td role="cell" class="py-3 px-4 text-right mono tracking-wider text-[var(--neon-cyan)]">
               <span aria-label="team score">
                 {{ score.total }}
               </span>
@@ -50,7 +84,7 @@
           </tr>
         {% empty %}
           <tr>
-            <td colspan="3">
+            <td colspan="3" class="py-6 text-center mono text-sm text-[var(--text-muted)]">
               // No data available
             </td>
           </tr>
@@ -60,6 +94,6 @@
     </table>
 
   </div>
-</div>
 
+</section>
 {% endblock %}

@@ -1,77 +1,86 @@
+{% extends "base.html" %}
 
-    {% extends "base.html" %}
-    <!-- <title>👑 Tech Empire Quest</title> -->
 {% block title %}Home | 👑 Tech Empire Quest{% endblock %}
 
 {% block content %}
-<div>
-  <h1>
-    👑 TECH EMPIRE QUEST
-  </h1>
+<section class="max-w-5xl mx-auto space-y-10">
+
+  <!-- Title -->
+  <div class="text-center">
+    <h2 class="mono text-2xl tracking-widest text-[var(--neon-purple)]">
+      // System Dashboard
+    </h2>
+  </div>
 
   {% if user.is_authenticated %}
-    <div>
-
-      <div>
-        <p>
-          <span>Operator:</span> 
-          <span>{{ user.username }}</span>
+    <!-- Operator Panel -->
+    <div class="panel card hud grid md:grid-cols-2 gap-6 items-center">
+      <div class="space-y-2">
+        <p class="mono text-sm">
+          <span class="text-[var(--text-muted)]">Operator:</span>
+          <span class="text-[var(--neon-cyan)] ml-2">{{ user.username }}</span>
         </p>
-
-        <p>
-          <span>Squad:</span> 
-          <span>{{ team.name }}</span>
+        <p class="mono text-sm">
+          <span class="text-[var(--text-muted)]">Squad:</span>
+          <span class="text-[var(--neon-cyan)] ml-2">{{ team.name }}</span>
         </p>
       </div>
 
-      <h2>
+      <div class="flex gap-4 justify-start md:justify-end">
+        <a href="{% url 'zones' %}" class="btn mono">
+          Enter Zones
+        </a>
+        <a href="{% url 'logout' %}" class="btn mono">
+          Disconnect
+        </a>
+      </div>
+    </div>
+
+    <!-- Squad Members -->
+    <div class="panel card hud">
+      <h2 class="mono text-lg mb-4 text-[var(--neon-purple)] tracking-widest">
         // Squad Members
       </h2>
 
       {% if players %}
-        <ul role="list" aria-label="Squad members">
+        <ul role="list" aria-label="Squad members" class="space-y-3">
           {% for player in players %}
-            <li role="listitem">
-
-              <span>
+            <li
+              role="listitem"
+              class="flex items-center justify-between px-4 py-3 rounded-lg bg-black/40 border border-white/10"
+            >
+              <span class="mono tracking-wider text-[var(--neon-cyan)]">
                 &gt; {{ player.name }}
               </span>
 
-              <span aria-label="role">
+              <span
+                class="mono text-xs px-3 py-1 rounded-full border border-[var(--panel-border)] text-[var(--text-main)]"
+                aria-label="role"
+              >
                 {{ player.get_role_display }}
               </span>
-
             </li>
           {% endfor %}
         </ul>
       {% else %}
-        <p>// No squad members detected...</p>
+        <p class="mono text-sm text-[var(--text-muted)]">
+          // No squad members detected...
+        </p>
       {% endif %}
-
-      <div>
-        <a href="{% url 'logout' %}">
-          Disconnect
-        </a>
-
-        <a href="{% url 'zones' %}">
-          Enter Zones
-        </a>
-      </div>
-
     </div>
-  {% else %}
-    <div>
 
-      <p>
-        // Access Denied
+  {% else %}
+    <!-- Access Denied Panel -->
+    <div class="panel card hud text-center space-y-6">
+      <p class="mono text-lg text-[var(--neon-pink)] tracking-widest">
+        // ACCESS DENIED
       </p>
 
-      <a href="{% url 'team_login' %}">
+      <a href="{% url 'team_login' %}" class="btn mono inline-block">
         Initialize Connection
       </a>
-
     </div>
   {% endif %}
-</div>
 
+</section>
 {% endblock %}

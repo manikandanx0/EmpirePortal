@@ -2,29 +2,36 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<div>
+<section class="min-h-[70vh] flex items-center justify-center">
 
-  <form method="post" aria-labelledby="login-heading">
+  <form
+    method="post"
+    aria-labelledby="login-heading"
+    class="panel card hud w-full max-w-md px-8 py-10 space-y-6"
+  >
     {% csrf_token %}
 
-    <h2 id="login-heading">
-      Access Terminal
-    </h2>
-    
-    <p>
-      // Authenticate to proceed
-    </p>
+    <div class="text-center space-y-2">
+      <h2 id="login-heading" class="mono text-xl tracking-widest text-[var(--neon-cyan)]">
+        ACCESS TERMINAL
+      </h2>
+      <p class="mono text-sm text-[var(--text-muted)] tracking-wider">
+        // Authenticate to proceed
+      </p>
+    </div>
 
     {% if error %}
-      <div role="alert" aria-live="assertive">
-        <p>
-          ! {{ error }}
-        </p>
+      <div
+        role="alert"
+        aria-live="assertive"
+        class="border border-red-500/40 bg-red-500/10 text-red-300 px-4 py-3 rounded-lg mono text-sm"
+      >
+        ! {{ error }}
       </div>
     {% endif %}
 
-    <div>
-      <label for="id_username">
+    <div class="space-y-2">
+      <label for="id_username" class="mono text-sm tracking-wider text-[var(--text-muted)]">
         Squad ID
       </label>
       <input
@@ -33,11 +40,12 @@
         name="username"
         required
         placeholder="Enter squad identifier..."
+        class="w-full px-4 py-3 rounded-lg bg-black/40 border border-[var(--panel-border)] text-[var(--text-main)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--neon-cyan)]"
       >
     </div>
 
-    <div>
-      <label for="id_password">
+    <div class="space-y-2">
+      <label for="id_password" class="mono text-sm tracking-wider text-[var(--text-muted)]">
         Access Code
       </label>
       <input
@@ -46,13 +54,18 @@
         name="password"
         required
         placeholder="Enter access code..."
+        class="w-full px-4 py-3 rounded-lg bg-black/40 border border-[var(--panel-border)] text-[var(--text-main)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--neon-cyan)]"
       >
     </div>
 
-    <button type="submit">
+    <button
+      type="submit"
+      class="btn mono w-full justify-center mt-4"
+    >
       Initialize Connection
     </button>
 
   </form>
-</div>
+
+</section>
 {% endblock %}

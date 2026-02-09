@@ -2,71 +2,147 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>
       {% block title %}
         👑 Tech Empire Quest
       {% endblock %}
     </title>
+
     {% load static %}
-    {% block extra_head %}
-    {% endblock %}
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&family=Space+Grotesk:wght@300..700&display=swap"
+      rel="stylesheet"
+    >
+
+    <!-- Tailwind (layout utilities only) -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Global Theme CSS -->
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+    {% block extra_head %}{% endblock %}
   </head>
-  <body>
 
-    <a href="#main" aria-label="Skip to main content">Skip to content</a>
+  <body class="min-h-[max-content]">
 
-    <!-- Cyber Timer -->
-    <div id="timer" role="status" aria-live="polite" aria-atomic="true">
+    <!-- Skip link -->
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-black focus:text-white focus:px-4 focus:py-2"
+    >
+      Skip to content
+    </a>
+
+    <!-- App Wrapper -->
+    <div class="min-h-[max-content] flex flex-col">
+
+<!-- Header / HUD Bar -->
+<header class="px-6 pt-6">
+  <div class="panel px-6 py-4 flex items-center justify-between gap-6">
+
+    <!-- Left: Title -->
+    <h1 class="
+      text-base md:text-lg
+      font-medium
+      tracking-[0.2em]
+      text-[var(--text-secondary)]
+      whitespace-nowrap
+    ">
+      TECH EMPIRE QUEST
+    </h1>
+
+    <!-- Right: Timer -->
+    <div
+      id="timer"
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+      class="
+        mono live
+        px-4 py-2
+        text-sm md:text-base
+        tracking-widest
+        select-none
+        rounded-lg
+        border border-[var(--border-glass)]
+        bg-[var(--glass-400)]
+        backdrop-blur-xl
+      "
+    >
       Loading...
     </div>
 
-    
+  </div>
+</header>
 
-    <main id="main" role="main">
-      {% block content %}
+      <!-- Main Content -->
+      <main
+        id="main"
+        role="main"
+        class="flex-1 px-6 pt-10 pb-16 max-w-7xl mx-auto w-full"
+      >
+        {% block content %}
+        {% endblock %}
+      </main>
 
-      {% endblock %}
-    </main>
+      <!-- Footer -->
+      <footer class="px-6 pb-6">
+        <div class="panel px-6 py-3 text-center text-sm text-[var(--text-muted)]">
+          © 2026 Tech Empire Quest · All systems monitored
+        </div>
+      </footer>
+
+    </div>
 
     {% block scripts %}{% endblock %}
+
+    <!-- Global Timer Script -->
     <script>
 (() => {
-  const globalStartTime = new Date('2026-02-09T10:00:00')
-  const globalEndTime = new Date('2026-02-14T12:00:00')
+  // GLOBAL EVENT TIMER (isolated scope)
+  const GLOBAL_TIMER_ID = "global-event-timer";
+  const timerEl = document.getElementById("timer");
+  if (!timerEl) return;
 
-  const timerEl = document.getElementById('timer')
-  if (!timerEl) return
+  const globalStartTime = new Date("2026-02-09T10:00:00").getTime();
+  const globalEndTime = new Date("2026-02-14T12:00:00").getTime();
 
   function updateGlobalTimer() {
-    const now = new Date()
+    const now = Date.now();
 
     if (now < globalStartTime) {
-      timerEl.textContent = 'Not started yet'
-      return
+      timerEl.textContent = "NOT STARTED";
+      return;
     }
 
-    const remaining = globalEndTime - now
+    const remaining = globalEndTime - now;
 
     if (remaining <= 0) {
-      timerEl.textContent = '00:00:00'
-      return
+      timerEl.textContent = "00:00:00";
+      return;
     }
 
-    const h = Math.floor(remaining / 3600000)
-    const m = Math.floor((remaining % 3600000) / 60000)
-    const s = Math.floor((remaining % 60000) / 1000)
+    const h = Math.floor(remaining / 3600000);
+    const m = Math.floor((remaining % 3600000) / 60000);
+    const s = Math.floor((remaining % 60000) / 1000);
 
     timerEl.textContent =
-      String(h).padStart(2, '0') + ':' +
-      String(m).padStart(2, '0') + ':' +
-      String(s).padStart(2, '0')
+      String(h).padStart(2, "0") + ":" +
+      String(m).padStart(2, "0") + ":" +
+      String(s).padStart(2, "0");
   }
 
-  updateGlobalTimer()
-  setInterval(updateGlobalTimer, 1000)
-})()
+  updateGlobalTimer();
+  setInterval(updateGlobalTimer, 1000);
+})();
 </script>
+
 
   </body>
 </html>

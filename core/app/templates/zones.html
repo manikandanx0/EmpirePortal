@@ -1,92 +1,106 @@
 {% extends 'base.html' %}
-{% block title %}Zones{% endblock %}
+{% block title %}Zones | 👑 Tech Empire Quest{% endblock %}
 
 {% block content %}
+<section class="max-w-6xl mx-auto space-y-10">
 
-<div>
-  <h2>
-    // Combat Zones
-  </h2>
+  <!-- Header -->
+  <div class="text-center">
+    <h2 class="mono text-2xl tracking-widest text-[var(--neon-purple)]">
+      // Zones
+    </h2>
+    <p class="mono text-sm text-[var(--text-muted)] tracking-wider mt-2">
+      Select an operational zone to deploy your squad
+    </p>
+  </div>
 
-  <ul>
+  <!-- Zones Grid -->
+  <ul class="grid md:grid-cols-2 gap-8">
 
     {% for zone in zones %}
-      <li role="article" aria-labelledby="zone-title-{{ zone.id }}">
-    >
+      <li
+        role="article"
+        aria-labelledby="zone-title-{{ zone.id }}"
+        class="panel card hud flex flex-col justify-between"
+      >
 
-        <!-- Zone info -->
-        <div>
-          <h3 id="zone-title-{{ zone.id }}">
+        <!-- Zone Info -->
+        <div class="space-y-3">
+          <h3
+            id="zone-title-{{ zone.id }}"
+            class="text-xl tracking-widest text-[var(--neon-cyan)]"
+          >
             {{ zone.title }}
           </h3>
 
-          <div>
+          <div class="text-sm text-[var(--text-muted)] leading-relaxed">
             {{ zone.description|safe }}
           </div>
         </div>
 
-        <!-- Zone action -->
-        <div>
+        <!-- Zone Action -->
+        <div class="mt-6 flex items-center justify-between gap-4">
+
+          <div class="mono text-xs tracking-widest text-[var(--text-muted)]">
+            {% if zone.score %}
+              SCORE: <span class="text-[var(--text-main)]">{{ zone.score }}</span>
+            {% else %}
+              SCORE: <span class="text-[var(--text-muted)]">—</span>
+            {% endif %}
+          </div>
+
+          <div class="flex items-center gap-3">
+
             {% if zone.has_completed %}
-            {% if zone.can_enter %}
-              <!-- COMPLETED BUT RE-ENTERABLE -->
-              <a href="{% url 'enter_zone' %}" aria-label="Re-enter {{ zone.title }}">
-                Re-Enter
-              </a>
-
-              <div>
-                <p>
-                  Prev Score
-                </p>
-                <p>
-                  {{ zone.score }}
-                </p>
-              </div>
-            {% else %}
-              <!-- COMPLETED & LOCKED -->
-              <span>
-                Completed
-              </span>
-
-              <div>
-                <p>
-                  Score
-                </p>
-                <p>
-                  {{ zone.score }}
-                </p>
-              </div>
-            {% endif %}
-
-          {% elif zone.has_active %}
-            <!-- ACTIVE -->
-              <a href="{% url 'enter_zone' %}" aria-label="Continue {{ zone.title }}">
-              Continue
-            </a>
-
-            <div>
-              <p>
-                Score
-              </p>
-              <p>
-                {{ zone.score }}
-              </p>
-            </div>
-
-          {% else %}
               {% if zone.can_enter %}
-              <!-- NEVER ATTEMPTED BUT ACCESS EXISTS -->
-              <a href="{% url 'enter_zone' %}" aria-label="Enter {{ zone.title }}">
-                Enter Zone
-              </a>
-            {% else %}
-              <!-- LOCKED -->
-              <span>
-                🔒 Locked
-              </span>
-            {% endif %}
-          {% endif %}
+                <!-- COMPLETED BUT RE-ENTERABLE -->
+                <a
+                  href="{% url 'enter_zone' %}"
+                  aria-label="Re-enter {{ zone.title }}"
+                  class="btn mono"
+                >
+                  Re-Enter
+                </a>
+              {% else %}
+                <!-- COMPLETED & LOCKED -->
+                <span
+                  class="mono text-xs px-3 py-1 rounded-full border border-white/20 text-[var(--text-muted)]"
+                >
+                  Completed
+                </span>
+              {% endif %}
 
+            {% elif zone.has_active %}
+              <!-- ACTIVE -->
+              <a
+                href="{% url 'enter_zone' %}"
+                aria-label="Continue {{ zone.title }}"
+                class="btn mono"
+              >
+                Continue
+              </a>
+
+            {% else %}
+              {% if zone.can_enter %}
+                <!-- NEVER ATTEMPTED BUT ACCESS EXISTS -->
+                <a
+                  href="{% url 'enter_zone' %}"
+                  aria-label="Enter {{ zone.title }}"
+                  class="btn mono"
+                >
+                  Enter Zone
+                </a>
+              {% else %}
+                <!-- LOCKED -->
+                <span
+                  class="mono text-xs px-3 py-1 rounded-full border border-[var(--neon-pink)] text-[var(--neon-pink)]"
+                >
+                  🔒 Locked
+                </span>
+              {% endif %}
+            {% endif %}
+
+          </div>
         </div>
 
       </li>
@@ -94,11 +108,15 @@
 
   </ul>
 
-  <div>
-    <a href="{% url 'index' %}">
+  <!-- Footer Nav -->
+  <div class="text-center pt-6">
+    <a
+      href="{% url 'index' %}"
+      class="mono text-sm tracking-widest text-[var(--neon-cyan)] hover:underline"
+    >
       ← Return to Base
     </a>
   </div>
-</div>
 
+</section>
 {% endblock %}
