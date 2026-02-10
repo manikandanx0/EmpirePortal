@@ -94,11 +94,12 @@ def index(request):
 
 # -------------------------
 # ZONES (TEAM VIEW)
-# -------------------------@login_required(login_url="/login/")
+# -------------------------
 @login_required(login_url="/login/")
 def zones_view(request):
     team = request.user.team
     zones = Zone.objects.all()
+    print(f"DEBUG: Found {zones.count()} zones for team {team.name}")
 
     # 1️⃣ Game state
     attempts = (
@@ -143,6 +144,10 @@ def zones_view(request):
         else:
             zone.can_enter = zone.has_access
 
+    print(f"DEBUG: Passing {len(zones)} zones to template")
+    for z in zones:
+        print(f"  Zone {z.id}: {z.title} - Active:{getattr(z, 'has_active', None)} Completed:{getattr(z, 'has_completed', None)} CanEnter:{getattr(z, 'can_enter', None)}")
+    
     return render(request, "zones.html", {
         "zones": zones,
     })

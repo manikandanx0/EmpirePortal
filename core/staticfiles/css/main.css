@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&family=Space+Grotesk:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+
+/* ===============================
+   THEME TOKENS
+================================ */
+:root {
+  --bg: #070b12;
+  --panel-bg: rgba(16, 24, 39, 0.75);
+  --panel-border: rgba(120, 180, 255, 0.35);
+  --neon-cyan: #64f3ff;
+  --neon-pink: #ff5cf4;
+  --neon-purple: #8b7cff;
+  --text-main: #e5f2ff;
+  --text-muted: #8aa4c0;
+  --ink-black: #0a0f18;
+}
+
+/* ===============================
+   BASE RESET
+================================ */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(1200px 600px at 80% -20%, rgba(139,124,255,0.15), transparent 60%),
+    radial-gradient(800px 500px at 10% 20%, rgba(100,243,255,0.12), transparent 60%),
+    linear-gradient(180deg, #060a12 0%, #04070d 100%);
+  color: var(--text-main);
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+    background-repeat: no-repeat;
+  background-attachment: fixed;
+  letter-spacing: 0.2px;
+  overflow-x: hidden;
+}
+
+/* ===============================
+   TYPOGRAPHY
+================================ */
+h1, h2, h3 {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: 1.2rem;
+  color: var(--text-main);
+}
+
+.hero-title {
+  font-size: 2rem;
+  color: var(--neon-cyan);
+  
+}
+
+.mono {
+  font-family: 'Kode Mono', monospace;
+  letter-spacing: 0.15em;
+}
+
+/* ===============================
+   GLASS PANELS
+================================ */
+.panel {
+  background: var(--panel-bg);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  box-shadow:
+    0 0 0 1px rgba(120, 180, 255, 0.05) inset,
+    0 10px 30px rgba(0, 0, 0, 0.6);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glowing edge */
+.panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 1px rgba(120, 180, 255, 0.25),
+    0 0 30px rgba(100, 243, 255, 0.08);
+}
+
+/* ===============================
+   TIMER STYLING
+================================ */
+#timer {
+  color: var(--neon-cyan);
+  text-shadow:
+    0 0 8px rgba(100, 243, 255, 0.6),
+    0 0 20px rgba(100, 243, 255, 0.35);
+}
+
+#timer.live {
+  animation: pulseGlow 2.2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(100,243,255,0.25);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(100,243,255,0.5);
+  }
+}
+
+/* ===============================
+   BUTTONS
+================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(100,243,255,0.2), rgba(139,124,255,0.2));
+  border: 1px solid var(--panel-border);
+  color: var(--text-main);
+  backdrop-filter: blur(10px);
+  transition: all 0.25s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 15px rgba(100,243,255,0.5),
+    0 0 35px rgba(139,124,255,0.35);
+}
+
+/* ===============================
+   CARDS / ZONES
+================================ */
+.card {
+  padding: 1.5rem;
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(20,30,60,0.75), rgba(10,14,26,0.85));
+  border: 1px solid rgba(120,180,255,0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(120deg, transparent 40%, rgba(100,243,255,0.15), transparent 60%);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ===============================
+   HUD LINES / DECOR
+================================ */
+.hud {
+  position: relative;
+}
+
+.hud::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border: 1px dashed rgba(100,243,255,0.25);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* ===============================
+   LINKS
+================================ */
+a {
+  color: var(--neon-cyan);
+  text-decoration: none;
+}
+
+a:hover {
+  text-shadow: 0 0 10px rgba(100,243,255,0.6);
+}

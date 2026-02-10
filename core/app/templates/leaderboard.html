@@ -15,23 +15,18 @@
       // GLOBAL RANKINGS
     </h2>
     <p class="mono text-sm text-[var(--text-muted)] tracking-wider mt-2">
-<<<<<<< HEAD
-      Live competitive standings across all squads
-=======
       // Sorted by score (high) → time (low)
->>>>>>> da05c12 (scoarboard & exitcode)
     </p>
   </div>
 
   <!-- Leaderboard Panel -->
-  <div class="panel card hud overflow-hidden animate-fade-in-up stagger-1" style="opacity: 0;">
+  <div class="panel card hud overflow-hidden animate-fade-in-up stagger-1">
 
-<<<<<<< HEAD
     <!-- Desktop Table View -->
     <div class="hidden md:block overflow-x-auto">
       <table role="table" aria-describedby="leaderboard-caption" class="w-full border-collapse">
         <caption id="leaderboard-caption" class="sr-only">
-          Global rankings table showing team and score
+          Global rankings table showing team, score, and total time
         </caption>
 
         <thead>
@@ -45,57 +40,15 @@
             <th scope="col" class="text-right py-4 px-6 mono text-xs tracking-widest text-[var(--text-muted)]">
               SCORE
             </th>
+            <th scope="col" class="text-right py-4 px-6 mono text-xs tracking-widest text-[var(--text-muted)]">
+              TIME
+            </th>
           </tr>
         </thead>
 
         <tbody>
-          {% for score in leaderboard %}
+          {% for item in leaderboard %}
           <tr class="border-b border-white/5 hover:bg-[var(--neon-cyan)]/5 transition-all group animate-fade-in-up">
-=======
-    <table
-      role="table"
-      aria-describedby="leaderboard-caption"
-      class="w-full border-collapse"
-    >
-      <caption id="leaderboard-caption" class="sr-only">
-        Global rankings table showing team, score, and total time
-      </caption>
-
-      <thead>
-        <tr class="border-b border-white/10">
-          <th
-            scope="col"
-            class="text-left py-3 px-4 mono text-xs tracking-widest text-[var(--text-muted)]"
-          >
-            Rank
-          </th>
-          <th
-            scope="col"
-            class="text-left py-3 px-4 mono text-xs tracking-widest text-[var(--text-muted)]"
-          >
-            Squad
-          </th>
-          <th
-            scope="col"
-            class="text-right py-3 px-4 mono text-xs tracking-widest text-[var(--text-muted)]"
-          >
-            Score
-          </th>
-          <th
-            scope="col"
-            class="text-right py-3 px-4 mono text-xs tracking-widest text-[var(--text-muted)]"
-          >
-            Time
-          </th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {% for item in leaderboard %}
-          <tr
-            class="border-b border-white/5 hover:bg-white/5 transition"
-          >
->>>>>>> da05c12 (scoarboard & exitcode)
 
             <!-- Rank -->
             <td role="cell" class="py-4 px-6">
@@ -120,16 +73,15 @@
             </td>
 
             <!-- Team -->
-<<<<<<< HEAD
             <td role="cell" class="py-4 px-6">
               <div class="flex items-center gap-3">
                 <div
                   class="w-10 h-10 rounded-lg bg-gradient-to-br from-[var(--neon-purple)]/20 to-[var(--neon-cyan)]/20 border border-white/10 flex items-center justify-center mono text-sm font-bold text-[var(--neon-purple)] group-hover:scale-110 transition-transform">
-                  {{ score.team.name|slice:":2"|upper }}
+                  {{ item.score.team.name|slice:":2"|upper }}
                 </div>
                 <span
                   class="tracking-wider text-[var(--text-main)] font-medium group-hover:text-[var(--neon-cyan)] transition-colors">
-                  {{ score.team.name }}
+                  {{ item.score.team.name }}
                 </span>
               </div>
             </td>
@@ -137,32 +89,21 @@
             <!-- Score -->
             <td role="cell" class="py-4 px-6 text-right">
               <span class="score-display" aria-label="team score">
-                {{ score.total }}
-=======
-            <td role="cell" class="py-3 px-4 tracking-wider">
-              {{ item.score.team.name }}
-            </td>
-
-            <!-- Score -->
-            <td role="cell" class="py-3 px-4 text-right mono tracking-wider text-[var(--neon-cyan)]">
-              <span aria-label="team score">
                 {{ item.score.total }}
               </span>
             </td>
 
             <!-- Time -->
-            <td role="cell" class="py-3 px-4 text-right mono tracking-wider text-[var(--neon-purple)]">
-              <span aria-label="total time">
+            <td role="cell" class="py-4 px-6 text-right">
+              <span class="mono tracking-wider text-[var(--neon-purple)]" aria-label="total time">
                 {{ item.total_time_display }}
->>>>>>> da05c12 (scoarboard & exitcode)
               </span>
             </td>
 
           </tr>
           {% empty %}
           <tr>
-<<<<<<< HEAD
-            <td colspan="3" class="py-12 text-center">
+            <td colspan="4" class="py-12 text-center">
               <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[var(--text-muted)]/10 mb-4">
                 <svg class="w-8 h-8 text-[var(--text-muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -172,10 +113,6 @@
               <p class="mono text-sm text-[var(--text-muted)]">
                 // No rankings data available yet
               </p>
-=======
-            <td colspan="4" class="py-6 text-center mono text-sm text-[var(--text-muted)]">
-              // No data available
->>>>>>> da05c12 (scoarboard & exitcode)
             </td>
           </tr>
           {% endfor %}
@@ -186,7 +123,7 @@
 
     <!-- Mobile Card View -->
     <div class="md:hidden space-y-3 p-4">
-      {% for score in leaderboard %}
+      {% for item in leaderboard %}
       <div
         class="flex items-center justify-between p-4 rounded-xl bg-black/30 border border-white/5 hover:border-[var(--neon-cyan)]/30 transition-all animate-fade-in-up">
         <div class="flex items-center gap-3">
@@ -215,15 +152,15 @@
 
           <!-- Team Name -->
           <div>
-            <p class="text-sm font-medium text-[var(--text-main)]">{{ score.team.name }}</p>
+            <p class="text-sm font-medium text-[var(--text-main)]">{{ item.score.team.name }}</p>
             <p class="mono text-xs text-[var(--text-muted)]">Squad</p>
           </div>
         </div>
 
-        <!-- Score -->
+        <!-- Score & Time -->
         <div class="text-right">
-          <p class="mono text-lg font-bold text-[var(--neon-cyan)]">{{ score.total }}</p>
-          <p class="mono text-xs text-[var(--text-muted)]">points</p>
+          <p class="mono text-lg font-bold text-[var(--neon-cyan)]">{{ item.score.total }}</p>
+          <p class="mono text-xs text-[var(--neon-purple)]">{{ item.total_time_display }}</p>
         </div>
       </div>
       {% empty %}
@@ -237,7 +174,7 @@
 
   <!-- Stats Summary -->
   {% if leaderboard %}
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 animate-fade-in-up stagger-2" style="opacity: 0;">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 animate-fade-in-up stagger-2">
     <div class="panel px-4 py-4 text-center">
       <p class="mono text-xs text-[var(--text-muted)] tracking-widest mb-1">TOTAL TEAMS</p>
       <p class="mono text-2xl font-bold text-[var(--neon-cyan)]">{{ leaderboard|length }}</p>
@@ -245,7 +182,7 @@
     <div class="panel px-4 py-4 text-center">
       <p class="mono text-xs text-[var(--text-muted)] tracking-widest mb-1">TOP SCORE</p>
       <p class="mono text-2xl font-bold text-[var(--neon-gold)]">
-        {% for top in leaderboard|slice:":1" %}{{ top.total }}{% empty %}—{% endfor %}
+        {% for top in leaderboard|slice:":1" %}{{ top.score.total }}{% empty %}—{% endfor %}
       </p>
     </div>
     <div class="panel px-4 py-4 text-center">

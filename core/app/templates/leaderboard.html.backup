@@ -1,0 +1,275 @@
+{% extends "base.html" %}
+
+{% block title %}Rankings | 👑 Tech Empire Quest{% endblock %}
+
+{% block content %}
+<section class="max-w-5xl mx-auto space-y-8 md:space-y-10">
+
+  <!-- Header -->
+  <div class="text-center animate-fade-in-up">
+    <div
+      class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--neon-gold)]/20 to-[var(--neon-purple)]/20 border border-[var(--neon-gold)]/30 mb-4">
+      <span class="text-3xl">🏆</span>
+    </div>
+    <h2 class="mono text-xl md:text-2xl tracking-widest gradient-text font-bold">
+      // GLOBAL RANKINGS
+    </h2>
+    <p class="mono text-sm text-[var(--text-muted)] tracking-wider mt-2">
+<<<<<<< HEAD
+      Live competitive standings across all squads
+=======
+      // Sorted by score (high) → time (low)
+>>>>>>> da05c12 (scoarboard & exitcode)
+    </p>
+  </div>
+
+  <!-- Leaderboard Panel -->
+  <div class="panel card hud overflow-hidden animate-fade-in-up stagger-1" style="opacity: 0;">
+
+<<<<<<< HEAD
+    <!-- Desktop Table View -->
+    <div class="hidden md:block overflow-x-auto">
+      <table role="table" aria-describedby="leaderboard-caption" class="w-full border-collapse">
+        <caption id="leaderboard-caption" class="sr-only">
+          Global rankings table showing team and score
+        </caption>
+
+        <thead>
+          <tr class="border-b border-white/10">
+            <th scope="col" class="text-left py-4 px-6 mono text-xs tracking-widest text-[var(--text-muted)]">
+              RANK
+            </th>
+            <th scope="col" class="text-left py-4 px-6 mono text-xs tracking-widest text-[var(--text-muted)]">
+              SQUAD
+            </th>
+            <th scope="col" class="text-right py-4 px-6 mono text-xs tracking-widest text-[var(--text-muted)]">
+              SCORE
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for score in leaderboard %}
+          <tr class="border-b border-white/5 hover:bg-[var(--neon-cyan)]/5 transition-all group animate-fade-in-up">
+=======
+    <table
+      role="table"
+      aria-describedby="leaderboard-caption"
+      class="w-full border-collapse"
+    >
+      <caption id="leaderboard-caption" class="sr-only">
+        Global rankings table showing team, score, and total time
+      </caption>
+
+      <thead>
+        <tr class="border-b border-white/10">
+          <th
+            scope="col"
+            class="text-left py-3 px-4 mono text-xs tracking-widest text-[var(--text-muted)]"
+          >
+            Rank
+          </th>
+          <th
+            scope="col"
+            class="text-left py-3 px-4 mono text-xs tracking-widest text-[var(--text-muted)]"
+          >
+            Squad
+          </th>
+          <th
+            scope="col"
+            class="text-right py-3 px-4 mono text-xs tracking-widest text-[var(--text-muted)]"
+          >
+            Score
+          </th>
+          <th
+            scope="col"
+            class="text-right py-3 px-4 mono text-xs tracking-widest text-[var(--text-muted)]"
+          >
+            Time
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for item in leaderboard %}
+          <tr
+            class="border-b border-white/5 hover:bg-white/5 transition"
+          >
+>>>>>>> da05c12 (scoarboard & exitcode)
+
+            <!-- Rank -->
+            <td role="cell" class="py-4 px-6">
+              {% if forloop.counter == 1 %}
+              <div class="rank-badge rank-1">
+                <span class="text-lg mr-1">🥇</span>
+                <span class="font-bold">#1</span>
+              </div>
+              {% elif forloop.counter == 2 %}
+              <div class="rank-badge rank-2">
+                <span class="text-lg mr-1">🥈</span>
+                <span class="font-bold">#2</span>
+              </div>
+              {% elif forloop.counter == 3 %}
+              <div class="rank-badge rank-3">
+                <span class="text-lg mr-1">🥉</span>
+                <span class="font-bold">#3</span>
+              </div>
+              {% else %}
+              <span class="mono text-[var(--text-muted)] font-medium pl-2">#{{ forloop.counter }}</span>
+              {% endif %}
+            </td>
+
+            <!-- Team -->
+<<<<<<< HEAD
+            <td role="cell" class="py-4 px-6">
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-10 h-10 rounded-lg bg-gradient-to-br from-[var(--neon-purple)]/20 to-[var(--neon-cyan)]/20 border border-white/10 flex items-center justify-center mono text-sm font-bold text-[var(--neon-purple)] group-hover:scale-110 transition-transform">
+                  {{ score.team.name|slice:":2"|upper }}
+                </div>
+                <span
+                  class="tracking-wider text-[var(--text-main)] font-medium group-hover:text-[var(--neon-cyan)] transition-colors">
+                  {{ score.team.name }}
+                </span>
+              </div>
+            </td>
+
+            <!-- Score -->
+            <td role="cell" class="py-4 px-6 text-right">
+              <span class="score-display" aria-label="team score">
+                {{ score.total }}
+=======
+            <td role="cell" class="py-3 px-4 tracking-wider">
+              {{ item.score.team.name }}
+            </td>
+
+            <!-- Score -->
+            <td role="cell" class="py-3 px-4 text-right mono tracking-wider text-[var(--neon-cyan)]">
+              <span aria-label="team score">
+                {{ item.score.total }}
+              </span>
+            </td>
+
+            <!-- Time -->
+            <td role="cell" class="py-3 px-4 text-right mono tracking-wider text-[var(--neon-purple)]">
+              <span aria-label="total time">
+                {{ item.total_time_display }}
+>>>>>>> da05c12 (scoarboard & exitcode)
+              </span>
+            </td>
+
+          </tr>
+          {% empty %}
+          <tr>
+<<<<<<< HEAD
+            <td colspan="3" class="py-12 text-center">
+              <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[var(--text-muted)]/10 mb-4">
+                <svg class="w-8 h-8 text-[var(--text-muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <p class="mono text-sm text-[var(--text-muted)]">
+                // No rankings data available yet
+              </p>
+=======
+            <td colspan="4" class="py-6 text-center mono text-sm text-[var(--text-muted)]">
+              // No data available
+>>>>>>> da05c12 (scoarboard & exitcode)
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+
+      </table>
+    </div>
+
+    <!-- Mobile Card View -->
+    <div class="md:hidden space-y-3 p-4">
+      {% for score in leaderboard %}
+      <div
+        class="flex items-center justify-between p-4 rounded-xl bg-black/30 border border-white/5 hover:border-[var(--neon-cyan)]/30 transition-all animate-fade-in-up">
+        <div class="flex items-center gap-3">
+          <!-- Rank Badge -->
+          {% if forloop.counter == 1 %}
+          <div
+            class="w-10 h-10 rounded-lg bg-[var(--neon-gold)]/10 border border-[var(--neon-gold)]/50 flex items-center justify-center">
+            <span class="text-lg">🥇</span>
+          </div>
+          {% elif forloop.counter == 2 %}
+          <div
+            class="w-10 h-10 rounded-lg bg-[var(--neon-silver)]/10 border border-[var(--neon-silver)]/50 flex items-center justify-center">
+            <span class="text-lg">🥈</span>
+          </div>
+          {% elif forloop.counter == 3 %}
+          <div
+            class="w-10 h-10 rounded-lg bg-[var(--neon-bronze)]/10 border border-[var(--neon-bronze)]/50 flex items-center justify-center">
+            <span class="text-lg">🥉</span>
+          </div>
+          {% else %}
+          <div
+            class="w-10 h-10 rounded-lg bg-black/40 border border-white/10 flex items-center justify-center mono text-sm text-[var(--text-muted)]">
+            #{{ forloop.counter }}
+          </div>
+          {% endif %}
+
+          <!-- Team Name -->
+          <div>
+            <p class="text-sm font-medium text-[var(--text-main)]">{{ score.team.name }}</p>
+            <p class="mono text-xs text-[var(--text-muted)]">Squad</p>
+          </div>
+        </div>
+
+        <!-- Score -->
+        <div class="text-right">
+          <p class="mono text-lg font-bold text-[var(--neon-cyan)]">{{ score.total }}</p>
+          <p class="mono text-xs text-[var(--text-muted)]">points</p>
+        </div>
+      </div>
+      {% empty %}
+      <div class="text-center py-8">
+        <p class="mono text-sm text-[var(--text-muted)]">// No data available</p>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+
+  <!-- Stats Summary -->
+  {% if leaderboard %}
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 animate-fade-in-up stagger-2" style="opacity: 0;">
+    <div class="panel px-4 py-4 text-center">
+      <p class="mono text-xs text-[var(--text-muted)] tracking-widest mb-1">TOTAL TEAMS</p>
+      <p class="mono text-2xl font-bold text-[var(--neon-cyan)]">{{ leaderboard|length }}</p>
+    </div>
+    <div class="panel px-4 py-4 text-center">
+      <p class="mono text-xs text-[var(--text-muted)] tracking-widest mb-1">TOP SCORE</p>
+      <p class="mono text-2xl font-bold text-[var(--neon-gold)]">
+        {% for top in leaderboard|slice:":1" %}{{ top.total }}{% empty %}—{% endfor %}
+      </p>
+    </div>
+    <div class="panel px-4 py-4 text-center">
+      <p class="mono text-xs text-[var(--text-muted)] tracking-widest mb-1">COMPETITION</p>
+      <p class="mono text-2xl font-bold text-[var(--neon-purple)]">🔥</p>
+    </div>
+    <div class="panel px-4 py-4 text-center">
+      <p class="mono text-xs text-[var(--text-muted)] tracking-widest mb-1">STATUS</p>
+      <p class="mono text-sm font-bold text-[var(--success)]">LIVE</p>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Footer Nav -->
+  <div class="text-center pt-4 animate-fade-in" style="animation-delay: 0.5s;">
+    <a href="{% url 'index' %}"
+      class="mono text-sm tracking-widest text-[var(--neon-cyan)] hover:underline inline-flex items-center gap-2 group">
+      <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor"
+        viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Return to Dashboard
+    </a>
+  </div>
+
+</section>
+{% endblock %}

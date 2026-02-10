@@ -65,7 +65,7 @@
 
   <!-- ZONE CONTENT CARD -->
   <div role="region" aria-labelledby="zone-title"
-    class="panel card hud prose prose-invert max-w-none animate-fade-in-up stagger-1" style="opacity: 0;">
+    class="panel card hud prose prose-invert max-w-none animate-fade-in-up stagger-1">
     <!-- Content Header -->
     <div class="flex items-center gap-2 mb-6 pb-4 border-b border-white/10">
       <svg class="w-5 h-5 text-[var(--neon-purple)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -76,9 +76,15 @@
     </div>
 
     <!-- Zone Content -->
+    {% if content %}
     <div class="zone-content">
       {{ content|safe }}
     </div>
+    {% else %}
+    <div class="text-center py-12">
+      <p class="mono text-sm text-[var(--text-muted)]">// No content available for this zone</p>
+    </div>
+    {% endif %}
   </div>
 
   <!-- SUBMIT PANEL -->
@@ -86,39 +92,35 @@
     id="submit-zone-form"
     method="post"
     action="{% url 'submit_zone' zone.id %}"
-    class="flex items-center justify-end"
+    class="panel card hud flex flex-col md:flex-row items-center justify-between gap-6 animate-fade-in-up stagger-2"
   >
     {% csrf_token %}
-<<<<<<< HEAD
+    <input type="hidden" name="exit_code" id="exit-code-input" value="">
 
-    <div class="flex items-center gap-3">
+    <div class="flex items-center gap-4">
       <div
-        class="w-10 h-10 rounded-lg bg-[var(--success)]/10 border border-[var(--success)]/30 flex items-center justify-center">
-        <svg class="w-5 h-5 text-[var(--success)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        class="w-12 h-12 rounded-xl bg-[var(--success)]/10 border border-[var(--success)]/30 flex items-center justify-center shrink-0">
+        <svg class="w-6 h-6 text-[var(--success)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
         </svg>
       </div>
       <div>
-        <p class="mono text-xs text-[var(--text-muted)] tracking-widest">READY TO SUBMIT?</p>
-        <p class="mono text-sm text-[var(--text-main)]">Complete your mission</p>
+        <p class="mono text-xs text-[var(--text-muted)] tracking-widest uppercase">Ready to Submit?</p>
+        <p class="mono text-sm text-[var(--text-main)] mt-1">Complete your mission</p>
       </div>
     </div>
 
-    <button type="submit" class="btn mono group">
+    <button type="button" id="submit-btn" class="btn mono group">
       <svg class="w-5 h-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor"
         viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
-=======
-    <input type="hidden" name="exit_code" id="exit-code-input" value="">
-    <button type="button" id="submit-btn" class="btn mono">
->>>>>>> da05c12 (scoarboard & exitcode)
       Submit Zone
     </button>
   </form>
 
-<<<<<<< HEAD
+
   <!-- Back to Zones Link -->
   <div class="text-center pt-2 animate-fade-in" style="animation-delay: 0.5s;">
     <a href="{% url 'zones' %}"
@@ -129,8 +131,7 @@
       </svg>
       Back to Zones
     </a>
-=======
-  <!-- EXIT CODE MODAL -->
+  </div>
   <div
     id="exit-code-modal"
     class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center"
@@ -158,7 +159,6 @@
         </button>
       </div>
     </div>
->>>>>>> da05c12 (scoarboard & exitcode)
   </div>
 
 </section>
@@ -167,8 +167,7 @@
   (() => {
     // ZONE TIMER (isolated scope)
     const zoneTimerEl = document.getElementById("zone-timer");
-    const zoneTimerText = document.getElementById("zone-timer-text");
-    if (!zoneTimerEl || !zoneTimerText) return;
+    if (!zoneTimerEl) return;
 
     const zoneStartTime = new Date("{{ attempt.entry_time|date:'c' }}").getTime();
 
@@ -179,106 +178,93 @@
       const mins = Math.floor(diff / 60);
       const secs = diff % 60;
 
-      zoneTimerText.textContent = mins + ":" + String(secs).padStart(2, "0");
+      zoneTimerEl.textContent = "Time spent: " + mins + ":" + String(secs).padStart(2, "0");
 
-      // Urgency styling when over 5 minutes
+      // Optional urgency styling
       if (diff > 300) {
-        zoneTimerEl.classList.add("urgent");
-        zoneTimerEl.style.borderColor = "var(--neon-pink)";
-        zoneTimerText.style.color = "var(--neon-pink)";
-      }
-
-      // Critical styling when over 10 minutes
-      if (diff > 600) {
-        zoneTimerEl.style.animation = "urgentPulse 1s ease-in-out infinite";
+        zoneTimerEl.classList.add("border-[var(--neon-pink)]");
       }
     }
 
-<<<<<<< HEAD
     updateZoneTimer();
     setInterval(updateZoneTimer, 1000);
   })();
-=======
-  updateZoneTimer();
-  setInterval(updateZoneTimer, 1000);
-})();
 
-(() => {
-  // Make all links in zone content open in new tab
-  const contentLinks = document.querySelectorAll('.prose a');
-  contentLinks.forEach(link => {
-    let href = link.getAttribute('href');
-    
-    // If href doesn't start with http://, https://, or other protocols, add https://
-    if (href && !href.match(/^(https?:\/\/|mailto:|tel:|ftp:)/i)) {
-      link.setAttribute('href', 'https://' + href);
-    }
-    
-    link.setAttribute('target', '_blank');
-    link.setAttribute('rel', 'noopener noreferrer');
-  });
-})();
+  (() => {
+    // Make all links in zone content open in new tab
+    const contentLinks = document.querySelectorAll('.prose a');
+    contentLinks.forEach(link => {
+      let href = link.getAttribute('href');
+      
+      // If href doesn't start with http://, https://, or other protocols, add https://
+      if (href && !href.match(/^(https?:\/\/|mailto:|tel:|ftp:)/i)) {
+        link.setAttribute('href', 'https://' + href);
+      }
+      
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer');
+    });
+  })();
 
-(() => {
-  // EXIT CODE MODAL LOGIC
-  const modal = document.getElementById('exit-code-modal');
-  const submitBtn = document.getElementById('submit-btn');
-  const cancelBtn = document.getElementById('cancel-btn');
-  const verifyBtn = document.getElementById('verify-exit-btn');
-  const exitCodeField = document.getElementById('exit-code-field');
-  const exitCodeInput = document.getElementById('exit-code-input');
-  const exitCodeError = document.getElementById('exit-code-error');
-  const form = document.getElementById('submit-zone-form');
+  (() => {
+    // EXIT CODE MODAL LOGIC
+    const modal = document.getElementById('exit-code-modal');
+    const submitBtn = document.getElementById('submit-btn');
+    const cancelBtn = document.getElementById('cancel-btn');
+    const verifyBtn = document.getElementById('verify-exit-btn');
+    const exitCodeField = document.getElementById('exit-code-field');
+    const exitCodeInput = document.getElementById('exit-code-input');
+    const exitCodeError = document.getElementById('exit-code-error');
+    const form = document.getElementById('submit-zone-form');
 
-  if (!modal || !submitBtn || !cancelBtn || !verifyBtn || !exitCodeField) return;
+    if (!modal || !submitBtn || !cancelBtn || !verifyBtn || !exitCodeField) return;
 
-  // Show modal when submit button clicked
-  submitBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-    exitCodeField.value = '';
-    exitCodeError.classList.add('hidden');
-    exitCodeField.focus();
-  });
-
-  // Hide modal on cancel
-  cancelBtn.addEventListener('click', () => {
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-  });
-
-  // Handle Enter key in exit code field
-  exitCodeField.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
+    // Show modal when submit button clicked
+    submitBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      verifyBtn.click();
-    }
-  });
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      exitCodeField.value = '';
+      exitCodeError.classList.add('hidden');
+      exitCodeField.focus();
+    });
 
-  // Verify exit code and submit form
-  verifyBtn.addEventListener('click', () => {
-    const enteredCode = exitCodeField.value.trim();
-    
-    if (!enteredCode) {
-      exitCodeError.textContent = 'Please enter an exit code.';
-      exitCodeError.classList.remove('hidden');
-      return;
-    }
+    // Hide modal on cancel
+    cancelBtn.addEventListener('click', () => {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    });
 
-    // Set the exit code value and submit the form
-    exitCodeInput.value = enteredCode;
-    form.submit();
-  });
+    // Handle Enter key in exit code field
+    exitCodeField.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        verifyBtn.click();
+      }
+    });
 
-  // Close modal on Escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('flex')) {
-      cancelBtn.click();
-    }
-  });
-})();
->>>>>>> da05c12 (scoarboard & exitcode)
+    // Verify exit code and submit form
+    verifyBtn.addEventListener('click', () => {
+      const enteredCode = exitCodeField.value.trim();
+      
+      if (!enteredCode) {
+        exitCodeError.textContent = 'Please enter an exit code.';
+        exitCodeError.classList.remove('hidden');
+        return;
+      }
+
+      // Set the exit code value and submit the form
+      exitCodeInput.value = enteredCode;
+      form.submit();
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('flex')) {
+        cancelBtn.click();
+      }
+    });
+  })();
 </script>
 
 {% endblock %}

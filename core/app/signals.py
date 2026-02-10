@@ -1,9 +1,11 @@
 import re
+import csv
 from django.db.models.signals import post_save, pre_save
 from django.contrib.auth.signals import user_logged_in, user_logged_out
 
 from django.dispatch import receiver
 from django.contrib.auth.models import User
+from django.conf import settings
 from .models import Team
 from django.utils.crypto import get_random_string
 from django.contrib.sessions.models import Session
@@ -15,6 +17,18 @@ def normalize_username(name: str) -> str:
     s = re.sub(r"[^a-z0-9_]+", "_", s)
     return s
 
+
+def append_team_credentials(team_name, username, password):
+    # Persist credentials to a CSV for admins to share with teams.
+    csv_path = settings.BASE_DIR / "generated_team_credentials.csv"
+    file_exists = csv_path.exists()
+
+    with csv_path.open("a", newline="", encoding="utf-8") as out:
+        writer = csv.writer(out)
+        if not file_exists:
+            writer.writerow(["team_name", "username", "password"])
+        writer.writerow([team_name, username, password])
+
 @receiver(post_save, sender=Team)
 def create_user_for_team(sender, instance, created, **kwargs):
     if created and instance.user is None:
@@ -23,6 +37,7 @@ def create_user_for_team(sender, instance, created, **kwargs):
         user = User.objects.create_user(username=username, password=password)
         instance.user = user
         instance.save(update_fields=["user"])
+        append_team_credentials(instance.name, username, password)
         print(f"[Team Login Created] {username} / {password}")
 
 @receiver(pre_save, sender=Team)

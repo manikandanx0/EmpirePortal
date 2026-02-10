@@ -40,13 +40,19 @@ class Command(BaseCommand):
         teams_created = {}
         credentials = []
 
-        with open(input_csv, newline="", encoding="utf-8") as file:
+        # ✅ utf-8-sig fixes Excel BOM issue
+        with open(input_csv, newline="", encoding="utf-8-sig") as file:
             reader = csv.DictReader(file)
 
             required_columns = {"team_name", "player_name", "role"}
+
+            if not reader.fieldnames:
+                raise Exception("CSV file is empty or missing header row")
+
             if not required_columns.issubset(reader.fieldnames):
                 raise Exception(
-                    f"CSV must contain columns: {required_columns}"
+                    f"CSV must contain columns {required_columns}, "
+                    f"but found {reader.fieldnames}"
                 )
 
             for row in reader:
@@ -62,7 +68,7 @@ class Command(BaseCommand):
 
                 # --- Create team + team user only once ---
                 if team_name not in teams_created:
-                    username = f"{slugify_name(team_name)}"
+                    username = slugify_name(team_name)
                     password = random_password()
 
                     user = User.objects.create_user(
