@@ -229,6 +229,7 @@ def zone_play(request, zone_id):
         "player": attempt.player,
         "role": attempt.player.role,
         "content": zone_content.content,
+        "exit_code": zone_content.exit_code or "",
     })
 # -------------------------
 # SUBMIT ZONE (PLAYER)
@@ -251,6 +252,20 @@ def submit_zone(request, zone_id):
     if not attempt:
         return redirect("zones")
 
+    # Validate exit code
+    zone_content = ZoneContent.objects.filter(
+        zone=attempt.zone,
+        role=attempt.player.role
+    ).first()
+
+    if zone_content and zone_content.exit_code:
+        submitted_exit_code = request.POST.get("exit_code", "").strip()
+        
+        if submitted_exit_code != zone_content.exit_code:
+            from django.contrib import messages
+            messages.error(request, "Incorrect exit code. Please try again.")
+            return redirect("zone_play", zone_id=zone_id)
+
     attempt.end_attempt(status="COMPLETED")
 
     # Optional cleanup
@@ -262,12 +277,37 @@ def submit_zone(request, zone_id):
 # -------------------------------------
 
 def leaderboard_view(request):
+    scores = Score.objects.select_related("team").all()
+    
+    # Prepare leaderboard data with time
+    leaderboard_data = []
+    for score in scores:
+        total_time = score.get_total_time_seconds()
+        leaderboard_data.append({
+            'score': score,
+            'total_time_seconds': total_time,
+            'total_time_display': format_time_display(total_time)
+        })
+    
+    # Sort by score (desc), then by time (asc - less is better)
     leaderboard = sorted(
-        Score.objects.select_related("team"),
-        key=lambda s: s.total,
-        reverse=True
+        leaderboard_data,
+        key=lambda x: (-x['score'].total, x['total_time_seconds'])
     )
 
     return render(request, "leaderboard.html", {
         "leaderboard": leaderboard
     })
+
+def format_time_display(seconds):
+    """Format seconds into MM:SS or HH:MM:SS"""
+    if seconds == 0:
+        return "--:--"
+    
+    hours = seconds // 3600
+    minutes = (seconds % 3600) // 60
+    secs = seconds % 60
+    
+    if hours > 0:
+        return f"{hours}:{minutes:02d}:{secs:02d}"
+    return f"{minutes}:{secs:02d}"

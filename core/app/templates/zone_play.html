@@ -7,6 +7,17 @@
 {% block content %}
 <section class="max-w-5xl mx-auto min-h-[70vh] space-y-8 relative">
 
+  <!-- MESSAGES -->
+  {% if messages %}
+    <div class="fixed top-20 right-4 z-50 space-y-2 max-w-md">
+      {% for message in messages %}
+        <div class="panel px-5 py-3 {% if message.tags == 'error' %}border-[var(--neon-pink)]{% else %}border-[var(--neon-cyan)]{% endif %} mono text-sm">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
   <!-- ZONE TIMER (TOP LEFT HUD) -->
   <div
     id="zone-timer"
@@ -72,11 +83,13 @@
 
   <!-- SUBMIT PANEL -->
   <form
+    id="submit-zone-form"
     method="post"
     action="{% url 'submit_zone' zone.id %}"
     class="flex items-center justify-end"
   >
     {% csrf_token %}
+<<<<<<< HEAD
 
     <div class="flex items-center gap-3">
       <div
@@ -97,10 +110,15 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
+=======
+    <input type="hidden" name="exit_code" id="exit-code-input" value="">
+    <button type="button" id="submit-btn" class="btn mono">
+>>>>>>> da05c12 (scoarboard & exitcode)
       Submit Zone
     </button>
   </form>
 
+<<<<<<< HEAD
   <!-- Back to Zones Link -->
   <div class="text-center pt-2 animate-fade-in" style="animation-delay: 0.5s;">
     <a href="{% url 'zones' %}"
@@ -111,6 +129,36 @@
       </svg>
       Back to Zones
     </a>
+=======
+  <!-- EXIT CODE MODAL -->
+  <div
+    id="exit-code-modal"
+    class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center"
+  >
+    <div class="panel card hud max-w-md w-full mx-4 space-y-4">
+      <h3 class="text-xl tracking-widest text-[var(--neon-cyan)]">Enter Exit Code</h3>
+      <p class="mono text-sm text-[var(--text-muted)]">
+        You must enter the correct exit code to complete this zone.
+      </p>
+      <input
+        type="text"
+        id="exit-code-field"
+        class="w-full bg-[var(--bg-card)] border border-[var(--neon-cyan)] rounded px-4 py-2 mono text-[var(--text-main)] focus:outline-none focus:border-[var(--neon-pink)]"
+        placeholder="Enter exit code..."
+      >
+      <p id="exit-code-error" class="text-[var(--neon-pink)] text-sm mono hidden">
+        Incorrect exit code. Try again.
+      </p>
+      <div class="flex gap-3 justify-end">
+        <button type="button" id="cancel-btn" class="btn mono bg-[var(--bg-panel)]">
+          Cancel
+        </button>
+        <button type="button" id="verify-exit-btn" class="btn mono">
+          Verify & Submit
+        </button>
+      </div>
+    </div>
+>>>>>>> da05c12 (scoarboard & exitcode)
   </div>
 
 </section>
@@ -146,9 +194,91 @@
       }
     }
 
+<<<<<<< HEAD
     updateZoneTimer();
     setInterval(updateZoneTimer, 1000);
   })();
+=======
+  updateZoneTimer();
+  setInterval(updateZoneTimer, 1000);
+})();
+
+(() => {
+  // Make all links in zone content open in new tab
+  const contentLinks = document.querySelectorAll('.prose a');
+  contentLinks.forEach(link => {
+    let href = link.getAttribute('href');
+    
+    // If href doesn't start with http://, https://, or other protocols, add https://
+    if (href && !href.match(/^(https?:\/\/|mailto:|tel:|ftp:)/i)) {
+      link.setAttribute('href', 'https://' + href);
+    }
+    
+    link.setAttribute('target', '_blank');
+    link.setAttribute('rel', 'noopener noreferrer');
+  });
+})();
+
+(() => {
+  // EXIT CODE MODAL LOGIC
+  const modal = document.getElementById('exit-code-modal');
+  const submitBtn = document.getElementById('submit-btn');
+  const cancelBtn = document.getElementById('cancel-btn');
+  const verifyBtn = document.getElementById('verify-exit-btn');
+  const exitCodeField = document.getElementById('exit-code-field');
+  const exitCodeInput = document.getElementById('exit-code-input');
+  const exitCodeError = document.getElementById('exit-code-error');
+  const form = document.getElementById('submit-zone-form');
+
+  if (!modal || !submitBtn || !cancelBtn || !verifyBtn || !exitCodeField) return;
+
+  // Show modal when submit button clicked
+  submitBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    exitCodeField.value = '';
+    exitCodeError.classList.add('hidden');
+    exitCodeField.focus();
+  });
+
+  // Hide modal on cancel
+  cancelBtn.addEventListener('click', () => {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  });
+
+  // Handle Enter key in exit code field
+  exitCodeField.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      verifyBtn.click();
+    }
+  });
+
+  // Verify exit code and submit form
+  verifyBtn.addEventListener('click', () => {
+    const enteredCode = exitCodeField.value.trim();
+    
+    if (!enteredCode) {
+      exitCodeError.textContent = 'Please enter an exit code.';
+      exitCodeError.classList.remove('hidden');
+      return;
+    }
+
+    // Set the exit code value and submit the form
+    exitCodeInput.value = enteredCode;
+    form.submit();
+  });
+
+  // Close modal on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('flex')) {
+      cancelBtn.click();
+    }
+  });
+})();
+>>>>>>> da05c12 (scoarboard & exitcode)
 </script>
 
 {% endblock %}

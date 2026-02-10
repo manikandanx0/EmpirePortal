@@ -52,6 +52,7 @@ class TeamSessionAdmin(admin.ModelAdmin):
 class ZoneContentInline(admin.TabularInline):
     model = ZoneContent
     extra = 0
+    fields = ("role", "content", "exit_code")
 
 @admin.register(Zone)
 class ZoneAdmin(admin.ModelAdmin):

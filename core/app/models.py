@@ -183,6 +183,19 @@ class Score(models.Model):
             self.zone6
         )
 
+    def get_total_time_seconds(self):
+        """Get total time taken across all completed zone attempts"""
+        from django.db.models import Sum
+        completed_attempts = ZoneAttempt.objects.filter(
+            team=self.team,
+            status="COMPLETED"
+        )
+        total_seconds = sum(
+            attempt.time_taken_seconds or 0
+            for attempt in completed_attempts
+        )
+        return total_seconds
+
     def __str__(self):
         return f"{self.team.name} Score"
 # -------------------------
@@ -202,6 +215,13 @@ class ZoneContent(models.Model):
 
     content = models.TextField(
         help_text="HTML / Markdown / plain text rendered inside the zone"
+    )
+
+    exit_code = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        help_text="Code required to exit/submit this zone"
     )
 
     class Meta:
