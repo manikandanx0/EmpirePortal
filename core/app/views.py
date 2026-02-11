@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.db import transaction
+from collections import defaultdict
+from django.utils.timezone import make_naive
 
 from .models import (
     TeamSession,
@@ -15,6 +17,12 @@ from .models import (
     Player,
     Score,
 )
+
+from django.utils.timezone import make_naive
+from django.db.models import Prefetch
+from .models import Score, ZoneAttempt
+
+
 
 # -------------------------
 # CONFIG
@@ -283,25 +291,73 @@ def submit_zone(request, zone_id):
 
 def leaderboard_view(request):
     scores = Score.objects.select_related("team").all()
-    
-    # Prepare leaderboard data with time
+
+    # -----------------------
+    # Leaderboard Sorting
+    # -----------------------
     leaderboard_data = []
+
     for score in scores:
         total_time = score.get_total_time_seconds()
+
         leaderboard_data.append({
-            'score': score,
-            'total_time_seconds': total_time,
-            'total_time_display': format_time_display(total_time)
+            "score": score,
+            "total_time_seconds": total_time,
+            "total_time_display": format_time_display(total_time),
         })
-    
-    # Sort by score (desc), then by time (asc - less is better)
+
+    # Sort by score DESC, time ASC
     leaderboard = sorted(
         leaderboard_data,
-        key=lambda x: (-x['score'].total, x['total_time_seconds'])
+        key=lambda x: (-x["score"].total, x["total_time_seconds"]),
     )
 
+    # -----------------------
+    # Timeline Graph Data
+    # -----------------------
+
+    attempts = (
+        ZoneAttempt.objects
+        .filter(status="COMPLETED", exit_time__isnull=False)
+        .select_related("team", "zone")
+        .order_by("exit_time")
+    )
+
+    team_progress = defaultdict(list)
+    team_scores = defaultdict(int)
+
+    for attempt in attempts:
+        team = attempt.team
+        team_name = team.name
+
+        score_obj = getattr(team, "score", None)
+        if not score_obj:
+            continue
+
+        # Dynamically get zone score (zone1, zone2, etc.)
+        zone_field = f"zone{attempt.zone.id}"
+        zone_points = getattr(score_obj, zone_field, 0)
+
+        # Accumulate score
+        team_scores[team_name] += zone_points
+
+        # Add timeline point
+        team_progress[team_name].append({
+            "x": make_naive(attempt.exit_time).isoformat(),
+            "y": team_scores[team_name],
+        })
+
+    graph_data = [
+        {
+            "label": team,
+            "data": data,
+        }
+        for team, data in team_progress.items()
+    ]
+
     return render(request, "leaderboard.html", {
-        "leaderboard": leaderboard
+        "leaderboard": leaderboard,
+        "graph_data": graph_data,
     })
 
 def format_time_display(seconds):

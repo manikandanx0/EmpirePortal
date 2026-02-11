@@ -4,7 +4,12 @@
 
 {% block content %}
 <section class="max-w-5xl mx-auto space-y-8 md:space-y-10">
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+<div style="height: 400px;">
+  <h3>Score Timeline</h3>
+  <canvas id="timelineChart" height="100"></canvas>
+</div>
   <!-- Header -->
   <div class="text-center animate-fade-in-up">
     <div
@@ -209,4 +214,44 @@
   </div>
 
 </section>
+
+<script>
+const graphData = {{ graph_data|safe }};
+
+const datasets = graphData.map(team => ({
+    label: team.label,
+    data: team.data,
+    stepped: true,
+    fill: false,
+    pointRadius: 0,
+    borderWidth: 2
+}));
+
+new Chart(document.getElementById("timelineChart"), {
+    type: "line",
+    data: { datasets: datasets },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            x: {
+                type: "time",
+                time: {
+                    unit: "minute"
+                }
+            },
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: "Score"
+                }
+            }
+        }
+    }
+});
+</script>
+
+
+
 {% endblock %}
