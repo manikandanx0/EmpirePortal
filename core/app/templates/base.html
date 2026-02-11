@@ -1,68 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Tech Empire Quest - Enter the digital frontier and compete for glory" />
-    <meta name="theme-color" content="#070b12" />
 
-    <title>
-      {% block title %}
-        👑 Tech Empire Quest
-      {% endblock %}
-    </title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Tech Empire Quest - Enter the digital frontier and compete for glory" />
+  <meta name="theme-color" content="#070b12" />
 
-    {% load static %}
+  <title>
+    {% block title %}
+    👑 Tech Empire Quest
+    {% endblock %}
+  </title>
 
-    <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👑</text></svg>">
+  {% load static %}
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&family=Space+Grotesk:wght@300..700&display=swap"
-      rel="stylesheet"
-    >
+  <!-- Favicon -->
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👑</text></svg>">
 
-    <!-- Tailwind (layout utilities only) -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&family=Space+Grotesk:wght@300..700&display=swap"
+    rel="stylesheet">
 
-    <!-- Global Theme CSS -->
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <!-- Tailwind (layout utilities only) -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-    {% block extra_head %}{% endblock %}
-  </head>
+  <!-- Global Theme CSS -->
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
 
-  <body class="min-h-[max-content]">
-    
-    <!-- Skip link -->
-    <a
-      href="#main"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-black focus:text-white focus:px-4 focus:py-2"
-    >
-      Skip to content
-    </a>
+  {% block extra_head %}{% endblock %}
+</head>
 
-    <!-- App Wrapper -->
-    <div class="min-h-[max-content] flex flex-col">
+<body class="min-h-[max-content]">
 
-<!-- Header / HUD Bar -->
-<header class="px-6 pt-6">
-  <div class="panel px-6 py-4 flex items-center justify-between gap-6">
-<h1 class="
-  hero-title
-">
-  Tech Empire Quest
-</h1>
+  <!-- Skip link -->
+  <a href="#main"
+    class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-black focus:text-white focus:px-4 focus:py-2">
+    Skip to content
+  </a>
 
-    <!-- Right: Timer -->
-    <div
-      id="timer"
-      role="status"
-      aria-live="polite"
-      aria-atomic="true"
-      class="
+  <!-- App Wrapper -->
+  <div class="min-h-[max-content] flex flex-col">
+
+    <!-- Header / HUD Bar -->
+    <header class="px-6 pt-6">
+      <div class="panel px-6 py-4 flex items-center justify-between gap-6">
+
+        <!-- Left: Title -->
+        <h1 class="hero-title">
+          👑 Tech Empire Quest
+        </h1>
+
+        <!-- Center: Navigation -->
+        <nav class="hidden md:flex items-center gap-4" aria-label="Main navigation">
+          <a href="{% url 'leaderboard' %}" class="header-nav-link">
+            🏆 Rankings
+          </a>
+        </nav>
+
+        <!-- Right: Timer -->
+        <div id="timer" role="status" aria-live="polite" aria-atomic="true" class="
         mono live
         px-3 md:px-4 py-2
         text-xs md:text-sm
@@ -72,122 +73,122 @@
         border border-[var(--border-glass)]
         bg-[var(--glass-400)]
         backdrop-blur-xl
-      "
-    >
-      <span class="loading-dots"><span></span><span></span><span></span></span>
-    </div>
+      ">
+          <span class="loading-dots"><span></span><span></span><span></span></span>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main" role="main" class="flex-1 px-4 md:px-6 pt-8 md:pt-10 pb-12 md:pb-16 max-w-7xl mx-auto w-full">
+      {% block content %}
+      {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="px-4 md:px-6 pb-4 md:pb-6 animate-fade-in" style="animation-delay: 0.3s;">
+      <div
+        class="panel px-4 md:px-6 py-3 flex flex-col md:flex-row items-center justify-between gap-2 text-center md:text-left">
+        <p class="text-xs md:text-sm text-[var(--text-muted)]">
+          © 2026 Tech Empire Quest · <span class="text-[var(--neon-cyan)]">All systems operational</span>
+        </p>
+
+        <!-- Mobile Navigation -->
+        <nav class="flex md:hidden items-center gap-4" aria-label="Mobile navigation">
+          <a href="{% url 'zones' %}"
+            class="mono text-xs tracking-wider text-[var(--text-muted)] hover:text-[var(--neon-cyan)]">
+            ZONES
+          </a>
+          <a href="{% url 'leaderboard' %}"
+            class="mono text-xs tracking-wider text-[var(--text-muted)] hover:text-[var(--neon-purple)]">
+            RANKINGS
+          </a>
+        </nav>
+
+        <p class="mono text-xs tracking-wider text-[var(--text-muted)]">
+          SYS_STATUS: <span class="text-[var(--success)]">ONLINE</span>
+        </p>
+      </div>
+    </footer>
 
   </div>
-</header>
 
-      <!-- Main Content -->
-      <main
-        id="main"
-        role="main"
-        class="flex-1 px-4 md:px-6 pt-8 md:pt-10 pb-12 md:pb-16 max-w-7xl mx-auto w-full"
-      >
-        {% block content %}
-        {% endblock %}
-      </main>
+  {% block scripts %}{% endblock %}
 
-      <!-- Footer -->
-      <footer class="px-4 md:px-6 pb-4 md:pb-6 animate-fade-in" style="animation-delay: 0.3s;">
-        <div class="panel px-4 md:px-6 py-3 flex flex-col md:flex-row items-center justify-between gap-2 text-center md:text-left">
-          <p class="text-xs md:text-sm text-[var(--text-muted)]">
-            © 2026 Tech Empire Quest · <span class="text-[var(--neon-cyan)]">All systems operational</span>
-          </p>
-          
-          <!-- Mobile Navigation -->
-          <nav class="flex md:hidden items-center gap-4" aria-label="Mobile navigation">
-            <a href="{% url 'zones' %}" class="mono text-xs tracking-wider text-[var(--text-muted)] hover:text-[var(--neon-cyan)]">
-              ZONES
-            </a>
-            <a href="{% url 'leaderboard' %}" class="mono text-xs tracking-wider text-[var(--text-muted)] hover:text-[var(--neon-purple)]">
-              RANKINGS
-            </a>
-          </nav>
-          
-          <p class="mono text-xs tracking-wider text-[var(--text-muted)]">
-            SYS_STATUS: <span class="text-[var(--success)]">ONLINE</span>
-          </p>
-        </div>
-      </footer>
+  <!-- Global Timer Script -->
+  <script>
+    (() => {
+      // GLOBAL EVENT TIMER (isolated scope)
+      const GLOBAL_TIMER_ID = "global-event-timer";
+      const timerEl = document.getElementById("timer");
+      if (!timerEl) return;
 
-    </div>
+      const globalStartTime = new Date("2026-02-09T10:00:00").getTime();
+      const globalEndTime = new Date("2026-02-14T12:00:00").getTime();
 
-    {% block scripts %}{% endblock %}
+      function updateGlobalTimer() {
+        const now = Date.now();
 
-    <!-- Global Timer Script -->
-    <script>
-(() => {
-  // GLOBAL EVENT TIMER (isolated scope)
-  const GLOBAL_TIMER_ID = "global-event-timer";
-  const timerEl = document.getElementById("timer");
-  if (!timerEl) return;
+        if (now < globalStartTime) {
+          timerEl.innerHTML = '<span class="text-[var(--warning)]">⏳ NOT STARTED</span>';
+          return;
+        }
 
-  const globalStartTime = new Date("2026-02-09T10:00:00").getTime();
-  const globalEndTime = new Date("2026-02-14T12:00:00").getTime();
+        const remaining = globalEndTime - now;
 
-  function updateGlobalTimer() {
-    const now = Date.now();
+        if (remaining <= 0) {
+          timerEl.innerHTML = '<span class="text-[var(--neon-pink)]">⏹ ENDED</span>';
+          timerEl.classList.remove('live');
+          return;
+        }
 
-    if (now < globalStartTime) {
-      timerEl.innerHTML = '<span class="text-[var(--warning)]">⏳ NOT STARTED</span>';
-      return;
-    }
+        const d = Math.floor(remaining / 86400000);
+        const h = Math.floor((remaining % 86400000) / 3600000);
+        const m = Math.floor((remaining % 3600000) / 60000);
+        const s = Math.floor((remaining % 60000) / 1000);
 
-    const remaining = globalEndTime - now;
+        let display = "";
+        if (d > 0) {
+          display = d + "d " + String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+        } else {
+          display = String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+        }
 
-    if (remaining <= 0) {
-      timerEl.innerHTML = '<span class="text-[var(--neon-pink)]">⏹ ENDED</span>';
-      timerEl.classList.remove('live');
-      return;
-    }
+        timerEl.textContent = display;
 
-    const d = Math.floor(remaining / 86400000);
-    const h = Math.floor((remaining % 86400000) / 3600000);
-    const m = Math.floor((remaining % 3600000) / 60000);
-    const s = Math.floor((remaining % 60000) / 1000);
+        // Urgency styling when less than 1 hour
+        if (remaining < 3600000) {
+          timerEl.classList.add('urgent');
+        }
+      }
 
-    let display = "";
-    if (d > 0) {
-      display = d + "d " + String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
-    } else {
-      display = String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
-    }
+      updateGlobalTimer();
+      setInterval(updateGlobalTimer, 1000);
+    })();
 
-    timerEl.textContent = display;
+    // Button Ripple Effect
+    document.addEventListener('click', function (e) {
+      const btn = e.target.closest('.btn');
+      if (!btn) return;
 
-    // Urgency styling when less than 1 hour
-    if (remaining < 3600000) {
-      timerEl.classList.add('urgent');
-    }
-  }
+      const ripple = document.createElement('span');
+      ripple.classList.add('btn-ripple');
 
-  updateGlobalTimer();
-  setInterval(updateGlobalTimer, 1000);
-})();
+      const rect = btn.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = e.clientX - rect.left - size / 2 + 'px';
+      ripple.style.top = e.clientY - rect.top - size / 2 + 'px';
 
-// Button Ripple Effect
-document.addEventListener('click', function(e) {
-  const btn = e.target.closest('.btn');
-  if (!btn) return;
+      btn.appendChild(ripple);
 
-  const ripple = document.createElement('span');
-  ripple.classList.add('btn-ripple');
-  
-  const rect = btn.getBoundingClientRect();
-  const size = Math.max(rect.width, rect.height);
-  ripple.style.width = ripple.style.height = size + 'px';
-  ripple.style.left = e.clientX - rect.left - size / 2 + 'px';
-  ripple.style.top = e.clientY - rect.top - size / 2 + 'px';
-  
-  btn.appendChild(ripple);
-  
-  ripple.addEventListener('animationend', () => ripple.remove());
-});
-</script>
+      ripple.addEventListener('animationend', () => ripple.remove());
+      setTimeout(() => { if (ripple.parentNode) ripple.remove(); }, 700);
+    });
+  </script>
 
 
-  </body>
+</body>
+
 </html>

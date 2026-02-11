@@ -4,12 +4,34 @@
 
 {% block content %}
 <section class="max-w-5xl mx-auto space-y-8 md:space-y-10">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
-<div style="height: 400px;">
-  <h3>Score Timeline</h3>
-  <canvas id="timelineChart" height="100"></canvas>
-</div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+
+  <!-- Score Timeline Graph Panel -->
+  <div class="panel card hud animate-fade-in-up" style="padding: 1.5rem 1.75rem 1.25rem;">
+    <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1rem;">
+      <div style="
+      width:40px; height:40px; border-radius:12px;
+      background: linear-gradient(135deg, rgba(100,243,255,0.15), rgba(139,124,255,0.15));
+      border: 1px solid rgba(100,243,255,0.3);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.25rem;
+    ">📈</div>
+      <div>
+        <h3 class="mono" style="
+        font-size:0.85rem; letter-spacing:0.15em; margin:0;
+        background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+      ">// SCORE TIMELINE</h3>
+        <p class="mono" style="font-size:0.65rem; color:var(--text-muted); letter-spacing:0.1em; margin:0;">
+          REAL-TIME CTF PROGRESS
+        </p>
+      </div>
+    </div>
+    <div style="height: 350px; position: relative;">
+      <canvas id="timelineChart"></canvas>
+    </div>
+  </div>
   <!-- Header -->
   <div class="text-center animate-fade-in-up">
     <div
@@ -216,40 +238,155 @@
 </section>
 
 <script>
-const graphData = {{ graph_data|safe }};
+  const graphData = {{ graph_data| safe }};
 
-const datasets = graphData.map(team => ({
-    label: team.label,
-    data: team.data,
-    stepped: true,
-    fill: false,
-    pointRadius: 0,
-    borderWidth: 2
-}));
+  // Neon color palette matching the site theme
+  const neonColors = [
+    { border: '#64f3ff', bg: 'rgba(100, 243, 255, 0.08)' },   // Cyan
+    { border: '#8b7cff', bg: 'rgba(139, 124, 255, 0.08)' },   // Purple
+    { border: '#ff5cf4', bg: 'rgba(255, 92, 244, 0.08)' },    // Pink
+    { border: '#ffd700', bg: 'rgba(255, 215, 0, 0.08)' },     // Gold
+    { border: '#00ff88', bg: 'rgba(0, 255, 136, 0.08)' },     // Green
+    { border: '#ff6b6b', bg: 'rgba(255, 107, 107, 0.08)' },   // Red
+    { border: '#4ecdc4', bg: 'rgba(78, 205, 196, 0.08)' },    // Teal
+    { border: '#ffe66d', bg: 'rgba(255, 230, 109, 0.08)' },   // Yellow
+  ];
 
-new Chart(document.getElementById("timelineChart"), {
+  const datasets = graphData.map((team, i) => {
+    const color = neonColors[i % neonColors.length];
+    return {
+      label: team.label,
+      data: team.data,
+      stepped: true,
+      fill: true,
+      backgroundColor: color.bg,
+      borderColor: color.border,
+      borderWidth: 2.5,
+      pointRadius: 0,
+      pointHoverRadius: 6,
+      pointHoverBackgroundColor: color.border,
+      pointHoverBorderColor: '#0a0f18',
+      pointHoverBorderWidth: 2,
+      tension: 0,
+    };
+  });
+
+  new Chart(document.getElementById("timelineChart"), {
     type: "line",
     data: { datasets: datasets },
     options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            x: {
-                type: "time",
-                time: {
-                    unit: "minute"
-                }
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: {
+        mode: 'nearest',
+        intersect: false,
+        axis: 'xy',
+      },
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            color: '#b8d4f0',
+            font: {
+              family: "'Kode Mono', monospace",
+              size: 11,
+              weight: '600',
             },
-            y: {
-                beginAtZero: true,
-                title: {
-                    display: true,
-                    text: "Score"
-                }
+            padding: 20,
+            usePointStyle: true,
+            pointStyle: 'rectRounded',
+            boxWidth: 12,
+            boxHeight: 12,
+          },
+        },
+        tooltip: {
+          backgroundColor: 'rgba(10, 15, 24, 0.92)',
+          borderColor: 'rgba(100, 243, 255, 0.3)',
+          borderWidth: 1,
+          titleColor: '#64f3ff',
+          bodyColor: '#e5f2ff',
+          titleFont: {
+            family: "'Kode Mono', monospace",
+            size: 12,
+            weight: '700',
+          },
+          bodyFont: {
+            family: "'Space Grotesk', sans-serif",
+            size: 13,
+          },
+          padding: { top: 10, bottom: 10, left: 14, right: 14 },
+          cornerRadius: 12,
+          displayColors: true,
+          boxPadding: 6,
+          callbacks: {
+            title: function (items) {
+              if (items.length > 0) {
+                const d = new Date(items[0].parsed.x);
+                return d.toLocaleString('en-US', {
+                  month: 'short', day: 'numeric',
+                  hour: '2-digit', minute: '2-digit'
+                });
+              }
+              return '';
+            },
+            label: function (ctx) {
+              return ' ' + ctx.dataset.label + ':  ' + ctx.parsed.y + ' pts';
             }
-        }
-    }
-});
+          }
+        },
+      },
+      scales: {
+        x: {
+          type: "time",
+          time: { unit: "minute" },
+          grid: {
+            color: 'rgba(120, 180, 255, 0.06)',
+            lineWidth: 1,
+          },
+          border: {
+            color: 'rgba(120, 180, 255, 0.15)',
+          },
+          ticks: {
+            color: '#8aa4c0',
+            font: {
+              family: "'Kode Mono', monospace",
+              size: 10,
+            },
+            maxRotation: 0,
+          },
+        },
+        y: {
+          beginAtZero: true,
+          grid: {
+            color: 'rgba(120, 180, 255, 0.06)',
+            lineWidth: 1,
+          },
+          border: {
+            color: 'rgba(120, 180, 255, 0.15)',
+          },
+          ticks: {
+            color: '#8aa4c0',
+            font: {
+              family: "'Kode Mono', monospace",
+              size: 10,
+            },
+            padding: 8,
+          },
+          title: {
+            display: true,
+            text: "SCORE",
+            color: '#64f3ff',
+            font: {
+              family: "'Kode Mono', monospace",
+              size: 11,
+              weight: '700',
+            },
+            padding: { bottom: 8 },
+          },
+        },
+      },
+    },
+  });
 </script>
 
 
