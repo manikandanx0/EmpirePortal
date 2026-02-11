@@ -288,12 +288,16 @@ def submit_zone(request, zone_id):
 # -------------------------------------
 # LEADERBOARD (PUBLIC / TEAM VIEW)
 # -------------------------------------
+from collections import defaultdict
+from django.shortcuts import render
+from django.utils.timezone import make_naive
+
 
 def leaderboard_view(request):
     scores = Score.objects.select_related("team").all()
 
     # -----------------------
-    # Leaderboard Sorting
+    # Leaderboard Data
     # -----------------------
     leaderboard_data = []
 
@@ -302,14 +306,21 @@ def leaderboard_view(request):
 
         leaderboard_data.append({
             "score": score,
-            "total_time_seconds": total_time,
+            "total_time_seconds": total_time,  # used only for display
             "total_time_display": format_time_display(total_time),
         })
 
-    # Sort by score DESC, time ASC
+    # -----------------------
+    # Leaderboard Sorting
+    # -----------------------
+    # 1️⃣ Total DESC
+    # 2️⃣ Credit DESC
     leaderboard = sorted(
         leaderboard_data,
-        key=lambda x: (-x["score"].total, x["total_time_seconds"]),
+        key=lambda x: (
+            -x["score"].total,
+            -x["score"].credit,
+        ),
     )
 
     # -----------------------
@@ -334,14 +345,11 @@ def leaderboard_view(request):
         if not score_obj:
             continue
 
-        # Dynamically get zone score (zone1, zone2, etc.)
         zone_field = f"zone{attempt.zone.id}"
         zone_points = getattr(score_obj, zone_field, 0)
 
-        # Accumulate score
         team_scores[team_name] += zone_points
 
-        # Add timeline point
         team_progress[team_name].append({
             "x": make_naive(attempt.exit_time).isoformat(),
             "y": team_scores[team_name],

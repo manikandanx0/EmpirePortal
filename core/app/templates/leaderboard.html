@@ -56,22 +56,26 @@
           Global rankings table showing team, score, and total time
         </caption>
 
-        <thead>
-          <tr class="border-b border-white/10">
-            <th scope="col" class="text-left py-4 px-6 mono text-xs tracking-widest text-[var(--text-muted)]">
-              RANK
-            </th>
-            <th scope="col" class="text-left py-4 px-6 mono text-xs tracking-widest text-[var(--text-muted)]">
-              SQUAD
-            </th>
-            <th scope="col" class="text-right py-4 px-6 mono text-xs tracking-widest text-[var(--text-muted)]">
-              SCORE
-            </th>
-            <th scope="col" class="text-right py-4 px-6 mono text-xs tracking-widest text-[var(--text-muted)]">
-              TIME
-            </th>
-          </tr>
-        </thead>
+<thead>
+  <tr class="border-b border-white/10">
+    <th scope="col" class="text-left py-4 px-6 mono text-xs tracking-widest text-[var(--text-muted)]">
+      RANK
+    </th>
+    <th scope="col" class="text-left py-4 px-6 mono text-xs tracking-widest text-[var(--text-muted)]">
+      SQUAD
+    </th>
+    <th scope="col" class="text-right py-4 px-6 mono text-xs tracking-widest text-[var(--text-muted)]">
+      SCORE
+    </th>
+    <th scope="col" class="text-right py-4 px-6 mono text-xs tracking-widest text-[var(--text-muted)]">
+      CREDIT
+    </th>
+    <th scope="col" class="text-right py-4 px-6 mono text-xs tracking-widest text-[var(--text-muted)]">
+      TIME
+    </th>
+  </tr>
+</thead>
+
 
         <tbody>
           {% for item in leaderboard %}
@@ -119,7 +123,13 @@
                 {{ item.score.total }}
               </span>
             </td>
-
+            <!-- Credit -->
+            <td role="cell" class="py-4 px-6 text-right">
+              <span class="mono font-semibold text-[var(--neon-gold)] tracking-wider"
+                    aria-label="team credit">
+                {{ item.score.credit }}
+              </span>
+            </td>
             <!-- Time -->
             <td role="cell" class="py-4 px-6 text-right">
               <span class="mono tracking-wider text-[var(--neon-purple)]" aria-label="total time">

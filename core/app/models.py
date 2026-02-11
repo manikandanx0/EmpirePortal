@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 import uuid
 from django.conf import settings
 from django.utils import timezone
-
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -165,6 +165,9 @@ class Score(models.Model):
         related_name="score"
     )
 
+    # -------------------------
+    # ZONE SCORES
+    # -------------------------
     zone1 = models.IntegerField(default=0)
     zone2 = models.IntegerField(default=0)
     zone3 = models.IntegerField(default=0)
@@ -172,6 +175,18 @@ class Score(models.Model):
     zone5 = models.IntegerField(default=0)
     zone6 = models.IntegerField(default=0)
 
+    # -------------------------
+    # CREDITS (Standalone Resource)
+    # -------------------------
+    credit = models.IntegerField(
+        default=0,
+        validators=[MinValueValidator(0)],
+        help_text="Standalone credits used for tie-breaking or advantages."
+    )
+
+    # -------------------------
+    # TOTAL SCORE (does NOT include credit)
+    # -------------------------
     @property
     def total(self):
         return (
@@ -183,21 +198,55 @@ class Score(models.Model):
             self.zone6
         )
 
+    # -------------------------
+    # TOTAL TIME (All completed zones)
+    # -------------------------
     def get_total_time_seconds(self):
-        """Get total time taken across all completed zone attempts"""
-        from django.db.models import Sum
-        completed_attempts = ZoneAttempt.objects.filter(
-            team=self.team,
+        """
+        Returns total time taken across all completed zone attempts.
+        """
+        completed_attempts = self.team.zone_attempts.filter(
             status="COMPLETED"
         )
+
         total_seconds = sum(
             attempt.time_taken_seconds or 0
             for attempt in completed_attempts
         )
+
         return total_seconds
+
+    # -------------------------
+    # DISPLAY TIME (Optional helper)
+    # -------------------------
+    def get_total_time_display(self):
+        """
+        Returns formatted time as HH:MM:SS
+        """
+        total_seconds = self.get_total_time_seconds()
+
+        hours = total_seconds // 3600
+        minutes = (total_seconds % 3600) // 60
+        seconds = total_seconds % 60
+
+        return f"{hours:02}:{minutes:02}:{seconds:02}"
+
+    # -------------------------
+    # LEADERBOARD RANKING VALUE
+    # -------------------------
+    @property
+    def tie_break_value(self):
+        """
+        Used for ordering:
+        1. Total score
+        2. Credit (higher wins)
+        3. Time (lower wins)
+        """
+        return (self.total, self.credit, -self.get_total_time_seconds())
 
     def __str__(self):
         return f"{self.team.name} Score"
+    
 # -------------------------
 # ZONE CONTENT (ROLE-BASED)
 # -------------------------

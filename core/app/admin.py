@@ -105,7 +105,6 @@ class ZoneAttemptAdmin(admin.ModelAdmin):
 # -------------------------
 # SCORE
 # -------------------------
-
 @admin.register(Score)
 class ScoreAdmin(admin.ModelAdmin):
     list_display = (
@@ -116,6 +115,7 @@ class ScoreAdmin(admin.ModelAdmin):
         "zone4",
         "zone5",
         "zone6",
+        "credit",          # NEW
         "total_display",
     )
 
@@ -126,11 +126,18 @@ class ScoreAdmin(admin.ModelAdmin):
         "zone4",
         "zone5",
         "zone6",
+        "credit",          # NEW
     )
 
     ordering = ("team__name",)
 
+    search_fields = (
+        "team__name",
+    )
+
+    list_select_related = ("team",)
+
     def total_display(self, obj):
-        return obj.total  # property, no parentheses
+        return obj.total
 
     total_display.short_description = "Total"
