@@ -13,10 +13,33 @@ def random_password(length=8):
     chars = string.ascii_letters + string.digits + "!@#$%^&*"
     return "".join(random.choice(chars) for _ in range(length))
 
-
 def slugify_name(name):
     return name.lower().replace(" ", "_")
 
+QUIRKY_SALTS = ["helicopter", 
+                "duraisingam", 
+                "weeb", 
+                "pro", 
+                "noob", 
+                "pokemon", 
+                "dorimon", 
+                "hatori", 
+                "naruto", 
+                "kazama",
+                "victory", 
+                "pikachu",
+                "bayblade",
+                "nobita",
+                "bheem",
+                "sasuke",
+                "madara",
+                "gojo",
+                "sukuna"
+                ]
+
+def generic_password(team_name):
+    salt = random.choice(QUIRKY_SALTS)
+    return f"TEQ-{team_name}-{salt}"
 
 VALID_ROLES = {choice[0] for choice in Player.ROLE_CHOICES}
 
@@ -69,7 +92,7 @@ class Command(BaseCommand):
                 # --- Create team + team user only once ---
                 if team_name not in teams_created:
                     username = slugify_name(team_name)
-                    password = random_password()
+                    password = generic_password(username)
 
                     user = User.objects.create_user(
                         username=username,
