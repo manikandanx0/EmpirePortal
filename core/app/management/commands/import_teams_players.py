@@ -16,30 +16,8 @@ def random_password(length=8):
 def slugify_name(name):
     return name.lower().replace(" ", "_")
 
-QUIRKY_SALTS = ["helicopter", 
-                "duraisingam", 
-                "weeb", 
-                "pro", 
-                "noob", 
-                "pokemon", 
-                "dorimon", 
-                "hatori", 
-                "naruto", 
-                "kazama",
-                "victory", 
-                "pikachu",
-                "bayblade",
-                "nobita",
-                "bheem",
-                "sasuke",
-                "madara",
-                "gojo",
-                "sukuna"
-                ]
-
 def generic_password(team_name):
-    salt = random.choice(QUIRKY_SALTS)
-    return f"TEQ-{team_name}-{salt}"
+    return f"TEQ-{team_name}@2026"
 
 VALID_ROLES = {choice[0] for choice in Player.ROLE_CHOICES}
 
