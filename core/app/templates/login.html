@@ -1,11 +1,7 @@
-{% extends 'base.html' %}
-{% block title %}Access Terminal | 👑 Tech Empire Quest{% endblock %}
-
-{% block content %}
+{% extends 'base.html' %} {% block title %}Access Terminal | 👑 Tech Empire
+Quest{% endblock %} {% block content %}
 <section class="min-h-[70vh] flex items-center justify-center px-4">
-
   <div class="w-full max-w-md animate-fade-in-up">
-
     <!-- Terminal Header Decoration -->
     <div class="flex items-center gap-2 mb-4 px-2">
       <div class="flex gap-1.5">
@@ -18,31 +14,51 @@
       </span>
     </div>
 
-    <form method="post" aria-labelledby="login-heading" class="panel card hud px-6 md:px-8 py-8 md:py-10 space-y-6">
+    <form
+      method="post"
+      aria-labelledby="login-heading"
+      class="panel card hud px-6 md:px-8 py-8 md:py-10 space-y-6"
+    >
       {% csrf_token %}
 
       <!-- Header -->
       <div class="text-center space-y-3">
         <div
-          class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--neon-cyan)]/20 to-[var(--neon-purple)]/20 border border-[var(--neon-cyan)]/30 mb-2">
+          class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--neon-cyan)]/20 to-[var(--neon-purple)]/20 border border-[var(--neon-cyan)]/30 mb-2"
+        >
           <span class="text-3xl">🔐</span>
         </div>
 
-        <h2 id="login-heading" class="mono text-xl md:text-2xl tracking-widest gradient-text font-bold">
+        <h2
+          id="login-heading"
+          class="mono text-xl md:text-2xl tracking-widest gradient-text font-bold"
+        >
           ACCESS TERMINAL
         </h2>
-        <p class="mono text-sm text-[var(--text-muted)] tracking-wider typing-cursor">
+        <p
+          class="mono text-sm text-[var(--text-muted)] tracking-wider typing-cursor"
+        >
           // Authenticate to proceed
         </p>
       </div>
 
       <!-- Error Alert -->
       {% if error %}
-      <div role="alert" aria-live="assertive" class="alert alert-error animate-fade-in">
-        <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd"
+      <div
+        role="alert"
+        aria-live="assertive"
+        class="alert alert-error animate-fade-in"
+      >
+        <svg
+          class="w-5 h-5 flex-shrink-0"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fill-rule="evenodd"
             d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-            clip-rule="evenodd" />
+            clip-rule="evenodd"
+          />
         </svg>
         <span class="mono text-sm tracking-wider">{{ error }}</span>
       </div>
@@ -50,17 +66,39 @@
 
       <!-- Username Field -->
       <div class="space-y-2">
-        <label for="id_username" class="mono text-xs tracking-widest text-[var(--text-muted)] flex items-center gap-2">
-          <span class="text-[var(--neon-cyan)]">▸</span> SQUAD ID
+        <label
+          for="id_username"
+          class="mono text-xs tracking-widest text-[var(--text-muted)] flex items-center gap-2"
+        >
+          <span class="text-[var(--neon-cyan)]">▸</span>
+          SQUAD ID
         </label>
         <div class="relative">
-          <input id="id_username" type="text" name="username" required autocomplete="username"
-            placeholder="Enter squad identifier..." style="padding-left: 3.5rem;"
-            class="w-full pr-4 py-3.5 rounded-xl bg-black/50 border border-white/10 text-[var(--text-main)] mono tracking-wider placeholder:text-[var(--text-muted)]/50 focus:outline-none focus:border-[var(--neon-cyan)] focus:ring-2 focus:ring-[var(--neon-cyan)]/20 transition-all">
-          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)] pointer-events-none">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          <input
+            id="id_username"
+            type="text"
+            name="username"
+            required
+            autocomplete="username"
+            placeholder="Enter squad identifier..."
+            style="padding-left: 3.5rem"
+            class="w-full pr-4 py-3.5 rounded-xl bg-black/50 border border-white/10 text-[var(--text-main)] mono tracking-wider placeholder:text-[var(--text-muted)]/50 focus:outline-none focus:border-[var(--neon-cyan)] focus:ring-2 focus:ring-[var(--neon-cyan)]/20 transition-all"
+          />
+          <span
+            class="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)] pointer-events-none"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+              />
             </svg>
           </span>
         </div>
@@ -68,31 +106,108 @@
 
       <!-- Password Field -->
       <div class="space-y-2">
-        <label for="id_password" class="mono text-xs tracking-widest text-[var(--text-muted)] flex items-center gap-2">
-          <span class="text-[var(--neon-cyan)]">▸</span> ACCESS CODE
+        <label
+          for="id_password"
+          class="mono text-xs tracking-widest text-[var(--text-muted)] flex items-center gap-2"
+        >
+          <span class="text-[var(--neon-cyan)]">▸</span>
+          ACCESS CODE
         </label>
+
         <div class="relative">
-          <input id="id_password" type="password" name="password" required autocomplete="current-password"
-            placeholder="Enter access code..." style="padding-left: 3.5rem;"
-            class="w-full pr-4 py-3.5 rounded-xl bg-black/50 border border-white/10 text-[var(--text-main)] mono tracking-wider placeholder:text-[var(--text-muted)]/50 focus:outline-none focus:border-[var(--neon-cyan)] focus:ring-2 focus:ring-[var(--neon-cyan)]/20 transition-all">
-          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)] pointer-events-none">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          <!-- Password Input -->
+          <input
+            id="id_password"
+            type="password"
+            name="password"
+            required
+            autocomplete="current-password"
+            placeholder="Enter access code..."
+            style="padding-left: 3.5rem; padding-right: 3.5rem"
+            class="w-full py-3.5 rounded-xl bg-black/50 border border-white/10 text-[var(--text-main)] mono tracking-wider placeholder:text-[var(--text-muted)]/50 focus:outline-none focus:border-[var(--neon-cyan)] focus:ring-2 focus:ring-[var(--neon-cyan)]/20 transition-all"
+          />
+
+          <!-- Lock Icon (Left) -->
+          <span
+            class="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)] pointer-events-none"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+              />
             </svg>
           </span>
+
+          <!-- Show / Hide Button (Right) -->
+          <button
+            type="button"
+            onclick="togglePassword()"
+            class="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--neon-cyan)] transition"
+          >
+            <svg
+              id="eyeOpen"
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm6 0s-3-6-9-6-9 6-9 6 3 6 9 6 9-6 9-6z"
+              />
+            </svg>
+
+            <svg
+              id="eyeClosed"
+              class="w-5 h-5 hidden"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13.875 18.825A10.05 10.05 0 0112 19c-6 0-9-7-9-7a17.97 17.97 0 013.306-4.293M9.88 9.88A3 3 0 0114.12 14.12M6.1 6.1L18 18"
+              />
+            </svg>
+          </button>
         </div>
       </div>
 
-    <button
-      type="submit"
-      class="btn mono w-full justify-center mt-4"
-    >
-      Log In
-    </button>
-
+      <button type="submit" class="btn mono w-full justify-center mt-4">
+        Log In
+      </button>
     </form>
   </div>
-
 </section>
+
+<script>
+      function togglePassword() {
+    const input = document.getElementById("id_password");
+    const eyeOpen = document.getElementById("eyeOpen");
+    const eyeClosed = document.getElementById("eyeClosed");
+
+    if (input.type === "password") {
+      input.type = "text";
+      eyeOpen.classList.add("hidden");
+      eyeClosed.classList.remove("hidden");
+    } else {
+      input.type = "password";
+      eyeOpen.classList.remove("hidden");
+      eyeClosed.classList.add("hidden");
+    }
+  }
+
+</script>
 {% endblock %}
