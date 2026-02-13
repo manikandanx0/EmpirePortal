@@ -10,5 +10,6 @@ urlpatterns = [
     path("login/", views.team_login, name="team_login"),
     path("logout/", views.team_logout, name="logout"),
     path("leaderboard/", views.leaderboard_view, name="leaderboard"),
+    path("leaderboard/data/", views.leaderboard_data_api, name="leaderboard_data_api"),
 
 ]

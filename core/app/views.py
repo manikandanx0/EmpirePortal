@@ -1,6 +1,6 @@
 from datetime import timedelta
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
@@ -380,3 +380,32 @@ def format_time_display(seconds):
     if hours > 0:
         return f"{hours}:{minutes:02d}:{secs:02d}"
     return f"{minutes}:{secs:02d}"
+
+
+def leaderboard_data_api(request):
+    scores = Score.objects.select_related("team").all()
+
+    user_team = None
+    if request.user.is_authenticated:
+        user_team = getattr(request.user, "team", None)
+
+    leaderboard_data = []
+
+    for score in scores:
+        total_time = score.get_total_time_seconds()
+
+        leaderboard_data.append({
+            "team": score.team.name,
+            "total": score.total,
+            "credit": score.credit,
+            "time": format_time_display(total_time),
+            "is_you": user_team == score.team if user_team else False,
+        })
+
+    leaderboard = sorted(
+        leaderboard_data,
+        key=lambda x: (-x["total"], -x["credit"]),
+    )
+
+    return JsonResponse({"leaderboard": leaderboard})
+
