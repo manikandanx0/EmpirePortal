@@ -2,3 +2,6 @@
 stack.txt
 
 __pycache__
+
+db.*
+*.db
