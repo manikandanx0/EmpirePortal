@@ -92,6 +92,8 @@ class ZoneAttemptAccess(models.Model):
             models.Index(fields=["attempt_code"]),
             models.Index(fields=["zone"]),
         ]
+        verbose_name = "Create Code"
+        verbose_name_plural = "Create Codes"
 
     def __str__(self):
         return f"{self.team.name} - {self.zone.title} - {self.player.role}"
@@ -243,7 +245,9 @@ class Score(models.Model):
         3. Time (lower wins)
         """
         return (self.total, self.credit, -self.get_total_time_seconds())
-
+    class Meta:
+        verbose_name = "Enter Scores"
+        verbose_name_plural = "Enter Scores"
     def __str__(self):
         return f"{self.team.name} Score"
     

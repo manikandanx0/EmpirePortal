@@ -1,0 +1,103 @@
+﻿Employee_ID,Name,City,Education_Level,Age,Birth_Year,Salary,Revenue_Generated,Customers_Served,Satisfaction_Level,Churn_Status,Department,Remote_Status
+101,John Doe,New York,Bachelors,29,1995,75000,150000,50,High,Stay,Sales,On-site
+102,Jane Smith,London,Masters,34,1991,92000,200000,40,High,Stay,Engineering,Hybrid
+103,Mike Jones,New York,High School,22,2002,45000,80000,90,Low,Churn,Customer Support,Remote
+104,Anna Wong,San Francisco,PhD,41,1983,125000,450000,30,High,Stay,Engineering,On-site
+105,Kevin Hart,London,Bachelors,30,1994,Unknown,110000,55,Medium,Stay,Sales,Hybrid
+106,Sara Lee,San Francisco,Masters,28,1996,82000,160000,45,Medium,Stay,Marketing,Remote
+101,John Doe,New York,Bachelors,29,1995,75000,150000,50,High,Stay,Sales,On-site
+107,Lucy Liu,New York,Bachelors,31,9999,78000,155000,52,High,Stay,Sales,Remote
+108,Tom Cook,London,PhD,55,1969,210000,900000,20,High,Stay,Executive,On-site
+109,Chris Rock,San Francisco,High School,25,2000,50000,90000,85,Low,Churn,Customer Support,Hybrid
+110,Emma Watts,New York,Bachelors,,1993,72000,140000,48,Medium,Stay,Marketing,On-site
+111,Ben Aff,London,Masters,33,1992,88000,190000,42,High,Stay,Engineering,Remote
+112,Dave Chappelle,San Francisco,Bachelors,45,1979,500000,120000,10,Low,Churn,Sales,On-site
+113,Will Smith,London,Bachelors,32,1992,81000,170000,51,Medium,Stay,Sales,Hybrid
+114,Brie Larson,New York,PhD,38,1986,135000,500000,25,High,Stay,Engineering,Remote
+115,Tom Hardy,London,High School,24,2001,48000,85000,88,Low,Churn,Customer Support,On-site
+116,Gal Gadot,San Francisco,Masters,35,1990,95000,210000,38,High,Stay,Engineering,Hybrid
+117,Mark Ruff,New York,Bachelors,40,1984,115000,115000,115,High,Stay,Marketing,On-site
+117,Mark Ruff,New York,Bachelors,40,1984,115000,115000,115,High,Stay,Marketing,On-site
+118,Scarlett J,London,Bachelors,36,1988,105000,220000,44,Medium,Stay,Sales,Remote
+119,Robert P,San Francisco,PhD,37,1987,140000,550000,28,High,Stay,Engineering,Hybrid
+120,Vin Diesel,New York,Bachelors,50,1974,150000,300000,60,High,Stay,Executive,On-site
+121,Zoe Saldana,London,Masters,39,1985,110000,250000,45,High,Stay,Engineering,Remote
+122,Chris Pratt,New York,Bachelors,42,1982,98000,180000,55,Medium,Stay,Sales,Hybrid
+123,Bradley Cooper,London,PhD,48,1976,190000,750000,22,High,Stay,Executive,On-site
+124,Paul Rudd,San Francisco,Bachelors,52,1972,120000,220000,40,High,Stay,Marketing,Remote
+125,Jeremy Renner,New York,Masters,51,1973,118000,210000,43,Medium,Stay,Engineering,Hybrid
+126,Don Cheadle,London,PhD,58,1966,185000,820000,18,High,Stay,Executive,On-site
+127,Elizabeth Olsen,San Francisco,Bachelors,34,1990,88000,165000,49,High,Stay,Marketing,Remote
+128,Anthony Mackie,New York,Masters,44,1980,105000,195000,41,Medium,Stay,Sales,Hybrid
+129,Sebastian Stan,London,Bachelors,41,1983,92000,175000,47,High,Stay,Sales,On-site
+130,Tom Holland,San Francisco,High School,27,1997,55000,95000,80,Low,Churn,Customer Support,Remote
+131,Benedict C,London,PhD,46,1978,175000,600000,30,High,Stay,Engineering,On-site
+132,Idris Elba,New York,Masters,50,1974,155000,400000,35,High,Stay,Engineering,Hybrid
+133,Chadwick B,San Francisco,Bachelors,43,1977,112000,210000,48,Medium,Stay,Sales,Remote
+134,Danai Gurira,London,PhD,45,1979,165000,550000,28,High,Stay,Engineering,On-site
+135,Letitia Wright,New York,Bachelors,30,1994,79000,145000,53,High,Stay,Marketing,Hybrid
+136,Lupita Nyongo,San Francisco,Masters,40,1984,115000,225000,42,High,Stay,Engineering,Remote
+137,Winston Duke,London,Bachelors,37,1987,95000,185000,46,Medium,Stay,Sales,On-site
+138,Angela Bassett,New York,PhD,64,1960,220000,1000000,15,High,Stay,Executive,Hybrid
+139,Martin Freeman,San Francisco,Bachelors,52,1972,110000,210000,50,High,Stay,Sales,Remote
+140,Tessa Thompson,London,Masters,39,1985,105000,200000,44,Medium,Stay,Marketing,On-site
+141,Jeff Goldblum,New York,PhD,70,1954,195000,850000,20,High,Stay,Executive,Hybrid
+142,Cate Blanchett,San Francisco,Masters,54,1970,180000,700000,25,High,Stay,Engineering,Remote
+143,Taika Waititi,London,Bachelors,47,1977,125000,300000,55,High,Stay,Marketing,On-site
+144,Karl Urban,New York,Masters,51,1973,115000,220000,45,Medium,Stay,Sales,Hybrid
+145,Rachel McAdams,San Francisco,Bachelors,45,1979,102000,190000,48,High,Stay,Engineering,Remote
+146,Mads Mikkelsen,London,PhD,57,1967,185000,750000,22,High,Stay,Executive,On-site
+147,Tilda Swinton,New York,Masters,62,1962,175000,650000,28,High,Stay,Engineering,Hybrid
+148,Chiwetel Ejiofor,San Francisco,PhD,46,1978,160000,500000,32,High,Stay,Engineering,Remote
+149,Josh Brolin,London,Bachelors,55,1969,135000,350000,50,High,Stay,Sales,On-site
+150,Karen Gillan,New York,Masters,35,1989,92000,180000,45,Medium,Stay,Marketing,Hybrid
+151,Pom Klementieff,San Francisco,Bachelors,37,1987,88000,165000,48,High,Stay,Sales,Remote
+152,Dave Bautista,London,High School,54,1970,75000,120000,75,Low,Churn,Customer Support,On-site
+153,Zoe Kravitz,New York,Masters,34,1990,98000,190000,44,High,Stay,Engineering,Hybrid
+154,Robert Pattinson,San Francisco,Bachelors,37,1987,115000,230000,42,High,Stay,Sales,Remote
+155,Colin Farrell,London,Masters,47,1977,130000,320000,38,High,Stay,Engineering,On-site
+156,Paul Dano,New York,Bachelors,39,1985,95000,180000,47,Medium,Stay,Sales,Hybrid
+157,Jeffrey Wright,San Francisco,PhD,57,1967,175000,600000,30,High,Stay,Executive,Remote
+158,Andy Serkis,London,Masters,59,1965,145000,380000,35,High,Stay,Engineering,On-site
+159,John Turturro,New York,Bachelors,66,1957,110000,210000,50,High,Stay,Marketing,Hybrid
+160,Barry Keoghan,San Francisco,High School,30,1994,52000,90000,85,Low,Churn,Customer Support,Remote
+161,Peter Sarsgaard,London,Masters,52,1972,125000,280000,40,High,Stay,Engineering,On-site
+162,Jayme Lawson,New York,Bachelors,25,1999,68000,130000,55,Medium,Stay,Marketing,Hybrid
+163,Con ONeill,San Francisco,Masters,57,1967,118000,220000,44,High,Stay,Sales,Remote
+164,Alex Ferns,London,Bachelors,54,1970,98000,190000,48,Medium,Stay,Sales,On-site
+165,Rupert Penry,New York,Masters,52,1972,112000,210000,45,High,Stay,Engineering,Hybrid
+166,Charlie Carver,San Francisco,Bachelors,35,1989,85000,160000,50,Medium,Stay,Marketing,Remote
+167,Max Carver,London,Bachelors,35,1989,85000,160000,50,Medium,Stay,Marketing,On-site
+168,Gil Perez,New York,Masters,45,1979,115000,230000,42,High,Stay,Engineering,Hybrid
+169,Hana Hrzic,San Francisco,Bachelors,28,1996,72000,140000,52,High,Stay,Sales,Remote
+170,Douglas Hodge,London,Masters,63,1961,140000,350000,38,High,Stay,Executive,On-site
+171,Leslie Ghost,New York,Bachelors,40,1984,95000,185000,46,Medium,Stay,Sales,Hybrid
+172,Oscar Isaac,San Francisco,Masters,44,1980,135000,320000,35,High,Stay,Engineering,Remote
+173,Ethan Hawke,London,Bachelors,53,1971,118000,220000,45,High,Stay,Sales,On-site
+174,May Calamawy,New York,Masters,37,1987,92000,175000,48,Medium,Stay,Marketing,Hybrid
+175,F Murray Abraham,San Francisco,PhD,84,1939,195000,900000,15,High,Stay,Executive,Remote
+176,Khalid Abdalla,London,Bachelors,43,1981,98000,190000,44,High,Stay,Sales,On-site
+177,Gaspard Ulliel,New York,Masters,37,1984,105000,210000,42,High,Stay,Engineering,Hybrid
+178,Lucy Thackeray,San Francisco,Bachelors,35,1989,78000,150000,52,Medium,Stay,Marketing,Remote
+179,Saffron Hocking,London,Bachelors,30,1994,72000,140000,55,High,Stay,Sales,On-site
+180,Shaun Scott,New York,Masters,69,1955,125000,280000,38,High,Stay,Engineering,Hybrid
+181,Ann Akinjirin,San Francisco,Bachelors,40,1984,92000,180000,46,Medium,Stay,Marketing,Remote
+182,David Ganly,London,Masters,50,1974,115000,225000,43,High,Stay,Sales,On-site
+183,Antonia Salib,New York,Bachelors,27,1997,65000,120000,58,Medium,Stay,Customer Support,Hybrid
+184,Sofia Danu,San Francisco,Masters,42,1982,108000,210000,44,High,Stay,Engineering,Remote
+185,Saba Mubarak,London,Bachelors,47,1977,95000,185000,47,High,Stay,Sales,On-site
+186,Dina Shihabi,New York,Masters,34,1989,88000,165000,50,Medium,Stay,Marketing,Hybrid
+187,Loic Mabanza,San Francisco,Bachelors,33,1991,79000,155000,52,High,Stay,Sales,Remote
+188,Claudio Fabian,London,Masters,55,1969,120000,280000,35,High,Stay,Engineering,On-site
+189,Bill Skarsgard,New York,Bachelors,33,1990,92000,190000,45,Medium,Stay,Sales,Hybrid
+190,Mia Goth,San Francisco,Masters,30,1993,85000,170000,48,High,Stay,Marketing,Remote
+191,Kevin Bacon,London,Bachelors,65,1958,145000,350000,30,High,Stay,Executive,On-site
+192,Bobby Cannavale,New York,Masters,53,1970,118000,220000,42,High,Stay,Engineering,Hybrid
+193,Michelle Monaghan,San Francisco,Bachelors,47,1976,105000,200000,44,Medium,Stay,Marketing,Remote
+194,Nelly Furtado,London,Masters,45,1978,112000,210000,45,High,Stay,Sales,On-site
+195,Timothée C,New York,Bachelors,28,1995,75000,150000,50,High,Stay,Marketing,Hybrid
+196,Zendaya,San Francisco,Masters,27,1996,82000,165000,48,High,Stay,Engineering,Remote
+197,Florence Pugh,London,Bachelors,28,1996,78000,155000,52,High,Stay,Sales,On-site
+198,Austin Butler,New York,Masters,32,1991,92000,185000,45,Medium,Stay,Marketing,Hybrid
+199,Christopher Walken,San Francisco,PhD,80,1943,210000,950000,12,High,Stay,Executive,Remote
+200,Lea Seydoux,London,Masters,38,1985,115000,230000,40,High,Stay,Engineering,On-site
